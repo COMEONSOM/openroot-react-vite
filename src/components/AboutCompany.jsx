@@ -1,6 +1,7 @@
 // ============================================================
 // ABOUTCOMPANY COMPONENT — SIMPLIFIED (WORK AREAS + WHY STAND OUT)
 // AUTHOR: TEAM OPENROOT (2026 EDITION)
+// VERSION: 2025.5
 // ============================================================
 
 import React from "react";

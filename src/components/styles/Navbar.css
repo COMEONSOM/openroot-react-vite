@@ -87,6 +87,7 @@
 }
 
 .software-btn {
+  position: relative;
   background: var(--card-bg);
   border: none;
   border-radius: 1rem;
@@ -101,27 +102,42 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   cursor: pointer;
-  transition: transform var(--transition-normal),
-              box-shadow var(--transition-fast),
-              background var(--transition-fast);
+  transition: all var(--transition-normal);
+  will-change: transform, box-shadow;
+}
+/* ADD INNER LIGHT EFFECT */
+.software-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.2), transparent 70%);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  border-radius: inherit;
+  pointer-events: none;
 }
 
+/* SMOOTH & GLOWY HOVER */
 .software-btn:hover {
-  background: linear-gradient(135deg, var(--primary-light), #a3b6ff);
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-6px) scale(1.05);
+  background: linear-gradient(135deg, var(--primary-light), #93a9ff);
+  box-shadow: 0 10px 24px rgba(65, 105, 225, 0.35);
+  transform: translateY(-8px) scale(1.06);
   color: #fff;
 }
 
+.software-btn:hover::before {
+  opacity: 1;
+}
+
+/* ICON ANIMATION ENHANCEMENT */
 .software-icon {
   margin-bottom: var(--space-xs);
-  transition: transform var(--transition-bounce);
+  transition: transform 0.5s var(--transition-bounce);
 }
 
 .software-btn:hover .software-icon {
-  transform: rotate(10deg) scale(1.1);
+  transform: rotate(14deg) scale(1.2);
 }
-
 .software-name {
   font-size: 0.85rem;
   text-align: center;
@@ -144,6 +160,7 @@
     NAV ITEM (CARD-STYLE BUTTONS)
    ============================================================ */
 .nav-band {
+  position: relative;
   flex: 1 1 280px;
   max-width: 280px;
   padding: var(--space-sm) var(--space-md);
@@ -156,18 +173,48 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  transition: transform var(--transition-normal),
-              box-shadow var(--transition-fast),
-              background-color var(--transition-fast);
+  transition: all var(--transition-normal);
+  will-change: transform, box-shadow, background; /* GPU-ACCELERATED */
 }
 
-/*  HOVER + FOCUS STATES */
+/* ADD A LIGHT GLOW LAYER FOR DEPTH */
+.nav-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 120%,
+    rgba(255, 255, 255, 0.15),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  pointer-events: none;
+}
+
+/* HOVER EFFECT */
 .nav-band:hover,
 .nav-band:focus {
-  background: var(--primary-light);
-  box-shadow: var(--shadow-hover);
-  transform: translateY(-4px) scale(1.03);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  box-shadow: 0 10px 25px rgba(65, 105, 225, 0.35),
+              0 4px 10px rgba(0, 0, 0, 0.08);
+  transform: translateY(-6px) scale(1.05);
 }
+
+.nav-band:hover::after {
+  opacity: 1;
+}
+
+.nav-band:hover .nav-label {
+  color: #fff;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+}
+
+.nav-band:hover .nav-arrow {
+  transform: translateX(6px) scale(1.15);
+  color: #fff;
+}
+
 
 /* ============================================================
     NAV LABEL (TEXT INSIDE NAV ITEMS)

@@ -1,5 +1,6 @@
 // ============================================================
 //  NAVBAR COMPONENT — MODERN, CLEAN, PRODUCTION-READY
+//  VERSION: 2025.5
 // ============================================================
 //  FEATURES:
 //   • SHOWS "RELEASED SOFTWARES" SECTION WITH RELEVANT ICONS
@@ -28,17 +29,25 @@ const redirectTo = async (url) => {
 // ============================================================
 // 🔹 ICON COMPONENTS — MATCH SOFTWARE PURPOSE VISUALLY
 // ============================================================
+
 const Icons = {
   stockAveraging: (
     // 📊 STOCK GRAPH ICON
-    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="30" height="30">
-      <path d="M3 3v18h18v-2H5V3H3Zm4 10 3-4 4 5 4-6 3 5v4H7v-4Z" />
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="28" height="28" role="img" aria-labelledby="sa6">
+      <title id="sa6">Stock Averaging — bars merging to average</title>
+      <rect x="3" y="10" width="2" height="5" rx="0.4"/>
+      <rect x="7" y="8" width="2" height="7" rx="0.4"/>
+      <rect x="11" y="6" width="2" height="9" rx="0.4"/>
+      <rect x="15" y="8" width="2" height="7" rx="0.4"/>
+      <rect x="19" y="10" width="2" height="5" rx="0.4"/>
+      <circle cx="12" cy="17.5" r="1.2"/>
     </svg>
+
   ),
   sipAnalyzer: (
     // 💹 SIP RETURN GRAPH ICON
-    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="30" height="30">
-      <path d="M3 3v18h18v-2H5V3H3Zm2 10 4 4 6-7 4 5 3-2-6-7-6 7-3-3-2 3Z" />
+    <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor">
+      <path d="M10 2a8 8 0 0 1 6.3 12.8l4.9 4.9-1.4 1.4-4.9-4.9A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12zm-2 7v3h1.5v-3H8zm2.5-2v5H12v-5h-1.5zm2.5 1v4h1.5v-4H13z"/>
     </svg>
   ),
   goldJewel: (
@@ -49,20 +58,40 @@ const Icons = {
   ),
   creditEmi: (
     // 💳 CREDIT CARD ICON
-    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="30" height="30">
-      <path d="M3 4h18a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2Zm0 4v2h18V8Zm0 6v2h10v-2Z" />
+    <svg viewBox="0 0 24 24" width="36" height="36" aria-hidden>
+      <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+      <rect x="3.5" y="9" width="6" height="2" rx="0.6" fill="#fff"></rect>
+      <text x="16" y="14" fontSize="7" textAnchor="middle" fill="#fff" fontFamily="sans-serif">₹</text>
     </svg>
   ),
-  travelExpense: (
+  travelExpense:(
     // ✈️ TRAVEL ICON
-    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="30" height="30">
-      <path d="M2.5 19 21 12 2.5 5v5l10 2-10 2v5Z" />
+    <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor">
+      <path d="M3 15h18v5H3v-5Zm2 2v1h14v-1H5Z" />
+      <path d="M6 10h12l2 3H4l2-3Z" />
+      <circle cx="8" cy="20" r="1" />
+      <circle cx="16" cy="20" r="1" />
+      <path d="M2 5h8v2H2V5Zm10 0h3v2h-3V5Zm5 0h5v2h-5V5Z" />
+      <path d="M20 12l2-2-1.5-1.5-2 2L20 12Z" />
+    </svg>
+  ),
+  gradeCalculator: (
+    // ✈️ GRADE CALCULATOR ICON
+    <svg viewBox="0 0 24 24" width="36" height="36" aria-hidden>
+      <rect x="3" y="3" width="18" height="18" rx="3"/>
+      <circle cx="8" cy="9" r="1.2" fill="#fff"/>
+      <circle cx="12" cy="9" r="1.2" fill="#fff"/>
+      <circle cx="16" cy="9" r="1.2" fill="#fff"/>
+      <circle cx="8" cy="13" r="1.2" fill="#fff"/>
+      <rect x="11" y="12" width="6" height="2" fill="#fff"/>
+      <rect x="11" y="15" width="6" height="2" fill="#fff"/>
     </svg>
   ),
   helpingHand: (
     // 🤝 HELPING HAND ICON (HANDSHAKE)
-    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="30" height="30">
-      <path d="M3 11v-1.5a1 1 0 0 1 1-1h2.4l2.1 2h1.7L13 8h2l1.9 2h2.1a1 1 0 0 1 1 1v1.5l-2.2 2.2a1 1 0 0 1-1.4 0l-.8-.8-1.2 1.2a1 1 0 0 1-1.4 0l-.9-.9-1.2 1.2a1 1 0 0 1-1.4 0L8 13.8l-2.2 2.2a1 1 0 0 1-1.4 0L3 13.5V11Zm12.3-4.2L13 8l-1.8 1.8H9l-2-2H4V9l2 2h1.4l1.6 1.6 1.2-1.2h1.4l1.2 1.2 1.2-1.2h1.3l1.2 1.2 1.6-1.6H20l2-2V7h-3l-2-2h-1.7Z" />
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor" role="img" aria-labelledby="sa2">
+      <title id="sa2">Helping Hand — balancing arrows</title>
+      <path d="M6 4a1 1 0 0 0-1 1v3h3l4 4 2-2-3-3h3V5a1 1 0 0 0-1-1H6zM18 20a1 1 0 0 0 1-1v-3h-3l-4-4-2 2 3 3H8v3a1 1 0 0 0 1 1h8z"/>
     </svg>
   ),
 };
@@ -95,6 +124,11 @@ const releasedSoftwares = Object.freeze([
     name: "Travel Expense Manager",
     href: "https://distribution-of-funds.onrender.com/",
     icon: Icons.travelExpense,
+  },
+  {
+    name: "Makaut Grade Calculator",
+    href: "https://comeonsom.github.io/makaut_grade_converter/",
+    icon: Icons.gradeCalculator,
   },
   {
     name: "Helping Hand",
@@ -131,12 +165,3 @@ export default function Navbar() {
     </nav>
   );
 }
-
-// ============================================================
-// ⚙️ PERFORMANCE NOTES:
-//  • STATIC STRUCTURE → O(1) ACCESS
-//  • RENDER COMPLEXITY → O(N) WHERE N = SOFTWARE COUNT
-//  • NON-BLOCKING ASYNC REDIRECT
-//  • SECURE TAB OPENING (NOOPENER + NOREFERRER)
-//  • HANDSHAKE ICON FOR “HELPING HAND” FOR VISUAL ACCURACY
-// ============================================================

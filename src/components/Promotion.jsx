@@ -1,6 +1,7 @@
 // ============================================================
 // PROMOTION COMPONENT — OPENROOT (2026 EDITION)
 // PURPOSE: MINIMAL NAVBAR WITH ABOUT COMPANY (MODAL) + CLASS REDIRECT
+// VERSION: 2025.5
 // ============================================================
 
 import React, { useState } from "react";

@@ -1,8 +1,7 @@
 // ============================================================
-// LOGIN MODAL (2026 READY, BEST PRACTICES)
 // HANDLES OAUTH (GOOGLE/FACEBOOK/GITHUB), PROFILE VIEW, LOGOUT
-// UI STATES: "loading" | "initial" | "success" | "error" | "profile" | "confirmLogout"
 // ALWAYS RETURNS RAW FIREBASE USER VIA onLogin(user)
+// VERSION: 2025.5
 // ============================================================
 
 import { useState, useEffect, useRef } from "react";
@@ -250,13 +249,15 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
     >
       <div className="modal-container" ref={modalRef} tabIndex={-1}>
         {/* CLOSE BUTTON */}
-        <button
-          className="modal-close"
-          aria-label="Close"
-          onClick={() => (showDetails ? setShowDetails(false) : onClose?.())}
-        >
-          &times;
-        </button>
+        {step !== "success" && step !== "error" && (
+          <button
+            className="modal-close"
+            aria-label="Close"
+            onClick={() => (showDetails ? setShowDetails(false) : onClose?.())}
+          >
+            &times;
+          </button>
+        )}
 
         {/* INITIAL LOGIN OPTIONS */}
         {step === "initial" && (

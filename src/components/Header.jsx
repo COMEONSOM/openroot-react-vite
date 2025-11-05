@@ -1,81 +1,194 @@
-import { useState, useEffect } from "react";
-import "./styles/Header.css";
-import LoginModal from "./LoginModal";
-import Lottie from "lottie-react";
-import loginAnimation from "../animations/login.json";
+/**
+ * ============================================================
+ * HEADER COMPONENT — OPENROOT
+ * MODERNIZED VERSION (ES2023+, OPTIMIZED, PRODUCTION-READY)
+ * VERSION: 2025.5
+ * ============================================================
+ * FEATURES:
+ * MODULAR STRUCTURE — REUSABLE LOGIC & HANDLERS
+ * FIREBASE AUTH — ROBUST SESSION SYNC
+ * ERROR HANDLING — EDGE-CASE SAFE
+ * TIME COMPLEXITY — O(1) OPERATIONS
+ * PERFORMANCE — MINIMAL RE-RENDERS
+ * COMMENTS — ALL CAPS FOR EASY DEV UNDERSTANDING
+ * ============================================================
+ */
 
-import { auth } from "../lib/firebase";
+import { useState, useEffect, useCallback, memo } from "react";
+import Lottie from "lottie-react";
 import { onAuthStateChanged } from "firebase/auth";
 
-export default function Header() {
+import { auth } from "../lib/firebase";
+import LoginModal from "./LoginModal";
+import loginAnimation from "../animations/login.json";
+import "./styles/Header.css";
+
+/**
+ * ============================================================
+ * UTILITY FUNCTION: SAFE SET USER
+ * ENSURES COMPONENT DOESN’T SET STATE ON UNMOUNT
+ * ============================================================
+ */
+const useSafeAuthListener = (setUser) => {
+  useEffect(() => {
+    let isMounted = true;
+
+    // LISTEN TO FIREBASE AUTH CHANGES
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      if (isMounted) {
+        setUser(firebaseUser ?? null); // ✅ NULL COALESCING
+      }
+    });
+
+    // CLEANUP TO AVOID MEMORY LEAKS
+    return () => {
+      isMounted = false;
+      unsubscribe();
+    };
+  }, [setUser]);
+};
+
+/**
+ * ============================================================
+ * UTILITY FUNCTION: FALLBACK AVATAR CHARACTER
+ * GETS FIRST CHARACTER FROM DISPLAY NAME OR DEFAULT 'U'
+ * ============================================================
+ */
+const getUserInitial = (user) =>
+  user?.displayName?.charAt(0)?.toUpperCase() ?? "U";
+
+/**
+ * ============================================================
+ * COMPONENT: USER AVATAR
+ * SHOWS IMAGE IF AVAILABLE, OTHERWISE FALLBACK CHARACTER
+ * ============================================================
+ */
+const UserAvatar = memo(({ user }) => {
+  if (!user) return null;
+
+  // RENDER AVATAR IMAGE IF AVAILABLE
+  if (user.photoURL) {
+    return (
+      <img
+        src={user.photoURL}
+        alt="User avatar"
+        className="avatar"
+        onError={(e) => {
+          // ✅ HANDLE IMAGE LOAD FAILURE
+          e.currentTarget.style.display = "none";
+        }}
+        loading="lazy" // ✅ PERFORMANCE OPTIMIZATION
+        draggable="false"
+      />
+    );
+  }
+
+  // OTHERWISE SHOW FALLBACK CHARACTER
+  return <div className="avatar-fallback">{getUserInitial(user)}</div>;
+});
+
+/**
+ * ============================================================
+ * COMPONENT: HEADER
+ * MAIN ENTRY — HANDLES LOGIN STATE, UI, AND USER SESSION
+ * ============================================================
+ */
+const Header = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [user, setUser] = useState(null);
 
-  // Keep header in sync with Firebase session
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (firebaseUser) => {
-      setUser(firebaseUser || null);
-    });
-    return unsub;
+  // ✅ HOOK TO KEEP FIREBASE SESSION SYNCED
+  useSafeAuthListener(setUser);
+
+  /**
+   * ============================================================
+   * HANDLER: LOGIN SUCCESS CALLBACK
+   * SETS USER AFTER MODAL LOGIN COMPLETION
+   * ============================================================
+   */
+  const handleLoginSuccess = useCallback((firebaseUser) => {
+    try {
+      if (!firebaseUser) throw new Error("Invalid user data.");
+      setUser(firebaseUser);
+    } catch (err) {
+      console.error("LOGIN ERROR:", err);
+    }
   }, []);
 
-  const handleLoginSuccess = (firebaseUser) => {
-    // Sync state with modal after login
-    setUser(firebaseUser);
-  };
+  /**
+   * ============================================================
+   * HANDLER: PROFILE CLICK
+   * OPEN PROFILE SECTION (LOCAL SESSION FLAG)
+   * ============================================================
+   */
+  const handleProfileClick = useCallback(() => {
+    try {
+      sessionStorage.setItem("ulvoxoOpenProfileDetails", "1");
+      setIsLoginOpen(true);
+    } catch (err) {
+      console.error("PROFILE SESSION ERROR:", err);
+    }
+  }, []);
+
+  /**
+   * ============================================================
+   * HANDLER: LOGIN BUTTON CLICK
+   * OPEN LOGIN MODAL SAFELY
+   * ============================================================
+   */
+  const handleLoginClick = useCallback(() => {
+    setIsLoginOpen(true);
+  }, []);
 
   return (
     <header className="header" role="banner">
-      {/* Logo */}
+      {/* ============================================================
+           LEFT SIDE: COMPANY LOGO
+           ============================================================ */}
       <div className="logo">
         <img
           src="/assets/openroot-white-nobg.png"
           alt="Openroot Logo"
           className="logo-img"
           draggable="false"
+          loading="eager" // ✅ PRIORITY LOAD
         />
       </div>
 
-      {/* Right side: auth area */}
+      {/* ============================================================
+           RIGHT SIDE: AUTH / PROFILE AREA
+           ============================================================ */}
       <div className="auth-area relative">
         {!user ? (
+          // SHOW LOGIN BUTTON WHEN NOT AUTHENTICATED
           <button
             className="login-animation"
-            onClick={() => setIsLoginOpen(true)}
+            onClick={handleLoginClick}
             aria-label="Open login"
           >
-            <Lottie animationData={loginAnimation} loop autoplay />
-            <span className="login-hint">Login Here →</span>
+            <Lottie
+              animationData={loginAnimation}
+              loop
+              autoplay
+              className="login-lottie"
+            />
+            <span className="login-hint">LOGIN HERE →</span>
           </button>
         ) : (
+          // SHOW PROFILE BUTTON WHEN LOGGED IN
           <button
             className="profile-button"
-            onClick={() => {
-              // Open login modal directly in profile mode
-              sessionStorage.setItem("ulvoxoOpenProfileDetails", "1");
-              setIsLoginOpen(true);
-            }}
+            onClick={handleProfileClick}
             aria-label="Open profile"
           >
-            {user.photoURL ? (
-              <img
-                src={user.photoURL}
-                alt="User avatar"
-                className="avatar"
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
-                }}
-              />
-            ) : (
-              <div className="avatar-fallback">
-                {user.displayName ? user.displayName.charAt(0).toUpperCase() : "U"}
-              </div>
-            )}
+            <UserAvatar user={user} />
           </button>
         )}
       </div>
 
-      {/* Login Modal */}
+      {/* ============================================================
+           MODAL: LOGIN / PROFILE
+           ============================================================ */}
       {isLoginOpen && (
         <LoginModal
           onClose={() => setIsLoginOpen(false)}
@@ -84,4 +197,6 @@ export default function Header() {
       )}
     </header>
   );
-}
+};
+
+export default memo(Header);

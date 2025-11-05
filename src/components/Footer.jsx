@@ -2,8 +2,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import Lottie from "lottie-react";
 import "./styles/Footer.css";
-import footerAnim from "../animations/footeranimation.json"; // Update with your actual Lottie file path
-
+import footerAnim from "../animations/footeranimation.json"; 
 export default function Footer() {
   const footerRef = useRef(null);
 
@@ -19,8 +18,8 @@ export default function Footer() {
     <footer ref={footerRef} className="footer-container">
       <div className="footer-content">
         <p>
-          <a href="https://comeonsom.github.io/Ulvoxo-Update/other_files/terms.html">Terms and Conditions</a> |{" "}
-          <a href="https://comeonsom.github.io/Ulvoxo-Update/other_files/founder.html">Founder Details</a>
+          <a href="https://comeonsom.github.io/openroot-helping-hand/other_files/terms.html">Terms and Conditions</a> |{" "}
+          <a href="https://comeonsom.github.io/openroot-helping-hand/other_files/founder.html">Founder Details</a>
         </p>
         <p>&copy; {new Date().getFullYear()} OPENROOT. All rights reserved.</p>
       </div>
