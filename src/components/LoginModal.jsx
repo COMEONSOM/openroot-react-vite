@@ -1,7 +1,7 @@
 // ============================================================
 // HANDLES OAUTH (GOOGLE/FACEBOOK/GITHUB), PROFILE VIEW, LOGOUT
 // ALWAYS RETURNS RAW FIREBASE USER VIA onLogin(user)
-// VERSION: 2025.5
+// VERSION: 2025.5 — UPDATED WITH LOCALSTORAGE LOGIN STATE
 // ============================================================
 
 import { useState, useEffect, useRef } from "react";
@@ -59,7 +59,6 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
 
   // ============================================================
   // FIREBASE AUTH SUBSCRIPTION
-  // NOTE: DO NOT OVERRIDE success/error SCREENS
   // ============================================================
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -73,7 +72,9 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
         setUsername(uName);
         sessionStorage.setItem("ulvoxoUser", uName);
 
-        // Only move to profile if not in success/error
+        // ✅ ADD LOGIN STATE FLAG
+        localStorage.setItem("isLoggedIn", "true");
+
         setStep((prev) =>
           prev === "success" || prev === "error" ? prev : "profile"
         );
@@ -84,12 +85,16 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
           } catch {}
         }
 
-        onLogin?.(user); // RAW USER OBJECT
+        onLogin?.(user);
       } else {
         setUserData(null);
         setUsername("guest@ulvoxo");
         sessionStorage.removeItem("ulvoxoUser");
         setShowDetails(false);
+
+        // ✅ REMOVE LOGIN STATE FLAG ON LOGOUT
+        localStorage.removeItem("isLoggedIn");
+
         setStep((prev) =>
           prev === "success" || prev === "error" ? prev : "initial"
         );
@@ -150,7 +155,10 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
       setUsername(uName);
       sessionStorage.setItem("ulvoxoUser", uName);
 
-      setStep("success"); // Show SUCCESS state
+      // ✅ ADD LOGIN STATE FLAG HERE
+      localStorage.setItem("isLoggedIn", "true");
+
+      setStep("success");
       onLogin?.(user);
     } catch (error) {
       console.error("OAUTH LOGIN ERROR:", error);
@@ -183,6 +191,9 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
       sessionStorage.removeItem("ulvoxoUser");
       setShowDetails(false);
       setStep("initial");
+
+      // ✅ REMOVE LOGIN STATE FLAG ON LOGOUT
+      localStorage.removeItem("isLoggedIn");
 
       if (onLogout) onLogout();
     } catch (error) {
@@ -339,12 +350,11 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
             role="button"
             tabIndex={0}
             onClick={(e) => {
-              e.stopPropagation(); // prevent overlay click close
+              e.stopPropagation();
               setShowDetails(true);
             }}
             onKeyDown={(e) => e.key === "Enter" && setShowDetails(true)}
           >
-
             {userData.photoURL ? (
               <img src={userData.photoURL} alt="User avatar" className="avatar" />
             ) : (
@@ -363,7 +373,7 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
         {showDetails && userData && step === "profile" && (
           <div
             className="profile-details"
-            onClick={(e) => e.stopPropagation()} // ✅ correct place
+            onClick={(e) => e.stopPropagation()}
           >
             {userData.photoURL ? (
               <img
@@ -392,7 +402,6 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
             </div>
           </div>
         )}
-
 
         {/* LOGOUT CONFIRMATION */}
         {step === "confirmLogout" && (

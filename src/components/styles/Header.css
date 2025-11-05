@@ -108,7 +108,7 @@
 
 .login-hint {
   font-size: var(--font-size-xs);
-  color: var(--color-primary);
+  color: #ffffff;
   margin-left: var(--space-xs);
   user-select: none;
 }

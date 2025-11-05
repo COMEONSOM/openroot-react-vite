@@ -115,7 +115,7 @@ export default function Promotion() {
                 <p>
                   Welcome to the future of technology and learning.
                   <br />
-                  <strong>Welcome to OpenRoot.</strong>
+                  <strong>Welcome to Openroot.</strong>
                 </p>
               </div>
             </motion.div>

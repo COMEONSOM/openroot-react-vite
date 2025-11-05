@@ -1,10 +1,11 @@
 // ============================================================
 //  NAVBAR COMPONENT — MODERN, CLEAN, PRODUCTION-READY
-//  VERSION: 2025.5
+//  VERSION: 2025.5 + LOGIN-GUARD INTEGRATION
 // ============================================================
 //  FEATURES:
 //   • SHOWS "RELEASED SOFTWARES" SECTION WITH RELEVANT ICONS
 //   • SECURE ASYNC REDIRECTION WITH ERROR HANDLING
+//   • LOGIN CHECK BEFORE ACCESSING ANY TOOL
 //   • STATIC DATA STRUCTURE (O(1) LOOKUP)
 //   • LIGHTWEIGHT, MINIMAL DEPENDENCIES
 // ============================================================
@@ -13,10 +14,30 @@ import React from "react";
 import "./styles/Navbar.css";
 
 // ============================================================
-// 🔹 ASYNC REDIRECT FUNCTION — SECURE AND ROBUST
+// 🔹 LOGIN STATUS CHECK FUNCTION
+// ============================================================
+//  ✅ REPLACE THIS WITH YOUR REAL AUTH LOGIC (EXAMPLE: FIREBASE, JWT, ETC.)
+//  FOR NOW, WE’LL USE LOCALSTORAGE FLAG: "isLoggedIn" = true/false
+// ============================================================
+const isUserLoggedIn = () => {
+  try {
+    return localStorage.getItem("isLoggedIn") === "true";
+  } catch {
+    return false;
+  }
+};
+
+// ============================================================
+// 🔹 ASYNC REDIRECT FUNCTION — SECURE + LOGIN PROTECTED
 // ============================================================
 const redirectTo = async (url) => {
   try {
+    // 🚨 LOGIN VALIDATION
+    if (!isUserLoggedIn()) {
+      alert("⚠️ Please log in first to access this tool.");
+      return;
+    }
+
     if (!url || typeof url !== "string") throw new Error("INVALID URL PROVIDED");
     await new Promise((resolve) => setTimeout(resolve, 60));
     window.open(url, "_blank", "noopener,noreferrer");
@@ -29,10 +50,8 @@ const redirectTo = async (url) => {
 // ============================================================
 // 🔹 ICON COMPONENTS — MATCH SOFTWARE PURPOSE VISUALLY
 // ============================================================
-
 const Icons = {
   stockAveraging: (
-    // 📊 STOCK GRAPH ICON
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="28" height="28" role="img" aria-labelledby="sa6">
       <title id="sa6">Stock Averaging — bars merging to average</title>
       <rect x="3" y="10" width="2" height="5" rx="0.4"/>
@@ -42,30 +61,25 @@ const Icons = {
       <rect x="19" y="10" width="2" height="5" rx="0.4"/>
       <circle cx="12" cy="17.5" r="1.2"/>
     </svg>
-
   ),
   sipAnalyzer: (
-    // 💹 SIP RETURN GRAPH ICON
     <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor">
       <path d="M10 2a8 8 0 0 1 6.3 12.8l4.9 4.9-1.4 1.4-4.9-4.9A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12zm-2 7v3h1.5v-3H8zm2.5-2v5H12v-5h-1.5zm2.5 1v4h1.5v-4H13z"/>
     </svg>
   ),
   goldJewel: (
-    // 💎 GOLD JEWEL ICON
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="30" height="30">
       <path d="M12 2 2 9l10 13 10-13Zm0 2.69 6.93 4.68L12 20.1 5.07 9.37Z" />
     </svg>
   ),
   creditEmi: (
-    // 💳 CREDIT CARD ICON
     <svg viewBox="0 0 24 24" width="36" height="36" aria-hidden>
       <rect x="2" y="5" width="20" height="14" rx="2"></rect>
       <rect x="3.5" y="9" width="6" height="2" rx="0.6" fill="#fff"></rect>
       <text x="16" y="14" fontSize="7" textAnchor="middle" fill="#fff" fontFamily="sans-serif">₹</text>
     </svg>
   ),
-  travelExpense:(
-    // ✈️ TRAVEL ICON
+  travelExpense: (
     <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor">
       <path d="M3 15h18v5H3v-5Zm2 2v1h14v-1H5Z" />
       <path d="M6 10h12l2 3H4l2-3Z" />
@@ -76,7 +90,6 @@ const Icons = {
     </svg>
   ),
   gradeCalculator: (
-    // ✈️ GRADE CALCULATOR ICON
     <svg viewBox="0 0 24 24" width="36" height="36" aria-hidden>
       <rect x="3" y="3" width="18" height="18" rx="3"/>
       <circle cx="8" cy="9" r="1.2" fill="#fff"/>
@@ -88,7 +101,6 @@ const Icons = {
     </svg>
   ),
   helpingHand: (
-    // 🤝 HELPING HAND ICON (HANDSHAKE)
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28" fill="currentColor" role="img" aria-labelledby="sa2">
       <title id="sa2">Helping Hand — balancing arrows</title>
       <path d="M6 4a1 1 0 0 0-1 1v3h3l4 4 2-2-3-3h3V5a1 1 0 0 0-1-1H6zM18 20a1 1 0 0 0 1-1v-3h-3l-4-4-2 2 3 3H8v3a1 1 0 0 0 1 1h8z"/>
@@ -100,41 +112,13 @@ const Icons = {
 // 🔹 SOFTWARE DATA (STATIC O(1) STRUCTURE)
 // ============================================================
 const releasedSoftwares = Object.freeze([
-  {
-    name: "Stock Averaging",
-    href: "https://comeonsom.github.io/stock-averaging/",
-    icon: Icons.stockAveraging,
-  },
-  {
-    name: "SIP Return Analyzer",
-    href: "https://comeonsom.github.io/investment-analyzer/",
-    icon: Icons.sipAnalyzer,
-  },
-  {
-    name: "Gold Jewel Price Indicator",
-    href: "https://comeonsom.github.io/Gold-Jewellery-Price-Calculator/",
-    icon: Icons.goldJewel,
-  },
-  {
-    name: "Credit Card EMI Calculator",
-    href: "https://comeonsom.github.io/Credit-Card-EMI-Calculator/",
-    icon: Icons.creditEmi,
-  },
-  {
-    name: "Travel Expense Manager",
-    href: "https://distribution-of-funds.onrender.com/",
-    icon: Icons.travelExpense,
-  },
-  {
-    name: "Makaut Grade Calculator",
-    href: "https://comeonsom.github.io/makaut_grade_converter/",
-    icon: Icons.gradeCalculator,
-  },
-  {
-    name: "Helping Hand",
-    href: "https://comeonsom.github.io/openroot-helping-hand/",
-    icon: Icons.helpingHand,
-  },
+  { name: "Stock Averaging", href: "https://comeonsom.github.io/stock-averaging/", icon: Icons.stockAveraging },
+  { name: "SIP Return Analyzer", href: "https://comeonsom.github.io/investment-analyzer/", icon: Icons.sipAnalyzer },
+  { name: "Gold Jewel Price Indicator", href: "https://comeonsom.github.io/Gold-Jewellery-Price-Calculator/", icon: Icons.goldJewel },
+  { name: "Credit Card EMI Calculator", href: "https://comeonsom.github.io/Credit-Card-EMI-Calculator/", icon: Icons.creditEmi },
+  { name: "Travel Expense Manager", href: "https://distribution-of-funds.onrender.com/", icon: Icons.travelExpense },
+  { name: "Makaut Grade Calculator", href: "https://comeonsom.github.io/makaut_grade_converter/", icon: Icons.gradeCalculator },
+  { name: "Helping Hand", href: "https://comeonsom.github.io/openroot-helping-hand/", icon: Icons.helpingHand },
 ]);
 
 // ============================================================

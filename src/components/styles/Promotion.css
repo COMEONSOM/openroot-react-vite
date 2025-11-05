@@ -1,84 +1,258 @@
 /* ============================================================
-   PROMOTION COMPONENT STYLES — MINIMAL NAV + INFO PANEL
+   PROMOTION COMPONENT — OPENROOT (2026 EDITION)
+   PURPOSE: MODULAR, RESPONSIVE, AND SCALABLE DESIGN SYSTEM
+   AUTHOR: OPENROOT DEV TEAM
+   VERSION: 2025.5
    ============================================================ */
 
-.promotion-container {
-  text-align: center;
-  padding: 1.5rem 0;
+/* ============================================================
+   ROOT VARIABLES — EASY BRAND CUSTOMIZATION
+   ============================================================ */
+:root {
+  /* BRAND COLORS */
+  --promo-primary: #1e3a8a;           /* ROYAL BLUE */
+  --promo-primary-hover: #3748c9;     /* LIGHTER BLUE HOVER */
+  --promo-bg-dark: rgba(0, 0, 0, 0.85);
+  --promo-text-main: #111111;
+  --promo-text-light: #f8fafc;
+  --promo-border-radius: 16px;
+
+  /* LAYOUT & SPACING */
+  --promo-padding: 1.5rem;
+  --promo-gap: 1.2rem;
+  --promo-max-width: 700px;
+  --promo-modal-padding: 2rem;
+
+  /* TYPOGRAPHY */
+  --promo-font-base: "Inter", system-ui, sans-serif;
+  --promo-font-size: 1rem;
+  --promo-line-height: 1.7;
+
+  /* TRANSITIONS & EFFECTS */
+  --promo-transition: all 0.3s ease;
+  --promo-shadow-light: 0 2px 12px rgba(0, 0, 0, 0.05);
+  --promo-shadow-strong: 0 8px 40px rgba(0, 0, 0, 0.4);
 }
 
+/* ============================================================
+   GLOBAL CONTAINER — FLEX ON MOBILE, GRID ON LARGER SCREENS
+   ============================================================ */
+.promotion-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: var(--promo-padding);
+  background-color: transparent;
+  font-family: var(--promo-font-base);
+}
+
+/* ============================================================
+   NAVIGATION SECTION — SWITCHES TO GRID ON LARGE DEVICES
+   ============================================================ */
 .promotion-nav {
   display: flex;
   justify-content: center;
-  gap: 1.2rem;
+  align-items: center;
+  gap: var(--promo-gap);
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
 }
 
+/* GRID ADAPTATION FOR LARGER DEVICES */
+@media (min-width: 768px) {
+  .promotion-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    justify-content: center;
+    max-width: 500px;
+  }
+}
+
+/* ============================================================
+   BUTTON STYLES — CONSISTENT ACROSS SCREEN SIZES
+   ============================================================ */
 .promo-btn {
-  background: #1e3a8a;
-  color: white;
+  background: var(--promo-primary);
+  color: var(--promo-text-light);
   border: none;
   padding: 0.7rem 1.5rem;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 500;
-  transition: background 0.3s;
+  font-size: var(--promo-font-size);
+  transition: var(--promo-transition);
+  min-width: 140px;
+  box-shadow: var(--promo-shadow-light);
 }
 
-.promo-btn:hover {
-  background: #3748c9;
+.promo-btn:hover,
+.promo-btn.active {
+  background: var(--promo-primary-hover);
+  transform: translateY(-2px);
 }
 
-/* ✅ FIXED OVERLAY ALWAYS ABOVE EVERYTHING */
+.promo-btn:active {
+  transform: translateY(0);
+}
+
+/* ============================================================
+   ABOUT MODAL — FULL-SCREEN FIXED OVERLAY
+   ============================================================ */
 .about-modal-overlay {
-  position: fixed !important;
-  inset: 0 !important;
-  background: rgba(0, 0, 0, 0.85);
-  backdrop-filter: blur(6px);
+  position: fixed;
+  inset: 0;
+  background: var(--promo-bg-dark);
+  backdrop-filter: blur(8px);
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 999999; /* guaranteed top layer */
+  align-items: center;
+  z-index: 999999;
+  padding: 1rem;
+  overflow-y: auto;
 }
 
-/* ✅ MODAL CONTENT BOX */
+/* ============================================================
+   MODAL CONTENT — CENTERED CARD STYLE
+   ============================================================ */
 .about-modal-content {
-  background: #fff;
-  color: #111;
-  max-width: 700px;
-  width: 90%;
-  border-radius: 16px;
-  padding: 2rem;
+  background: #ffffff;
+  color: var(--promo-text-main);
+  width: 100%;
+  max-width: var(--promo-max-width);
+  border-radius: var(--promo-border-radius);
+  padding: var(--promo-modal-padding);
   position: relative;
-  text-align: left;
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: var(--promo-shadow-strong);
   overflow-y: auto;
   max-height: 85vh;
+  animation: fadeInUp 0.4s ease;
 }
 
-/* CLOSE BUTTON */
-.close-modal-btn {
+/* ============================================================
+   CLOSE BUTTON — FLOATING ACTION STYLE
+   ============================================================ */
+.close-btn {
   position: absolute;
   top: 12px;
   right: 16px;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
+  font-weight: 600;
   border: none;
   background: transparent;
   color: #444;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s ease;
+  z-index: 10;
 }
 
-.close-modal-btn:hover {
+.close-btn:hover {
   transform: scale(1.2);
 }
 
+/* ============================================================
+   ABOUT COMPANY CONTENT — STRUCTURED AND LEGIBLE
+   ============================================================ */
 .about-company-promo {
-  background: white;
+  background: #ffffff;
   border-radius: 12px;
   padding: 1.5rem;
-  line-height: 1.7;
+  line-height: var(--promo-line-height);
   color: #1e293b;
-  font-size: 1rem;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  font-size: var(--promo-font-size);
+  box-shadow: var(--promo-shadow-light);
 }
 
+.about-company-promo p {
+  margin-bottom: 1rem;
+  text-align: justify;
+}
+
+.about-company-promo ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 1rem 0;
+}
+
+.about-company-promo li {
+  margin-bottom: 0.6rem;
+  padding-left: 0.5rem;
+}
+
+/* ============================================================
+   ANIMATIONS — SUBTLE AND PERFORMANCE-FRIENDLY
+   ============================================================ */
+@keyframes fadeInUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE DESIGN BREAKPOINTS
+   ============================================================ */
+
+/* ✅ SMALL DEVICES (MOBILE / FOLDING PHONE) */
+@media (max-width: 480px) {
+  .promo-btn {
+    width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .about-modal-content {
+    padding: 1.2rem;
+    border-radius: 12px;
+  }
+
+  .about-company-promo {
+    font-size: 0.95rem;
+  }
+}
+
+/* ✅ MEDIUM DEVICES (TABLET / MINI LAPTOP) */
+@media (min-width: 481px) and (max-width: 1024px) {
+  .promotion-container {
+    padding: 2rem;
+  }
+
+  .promo-btn {
+    font-size: 1rem;
+  }
+
+  .about-modal-content {
+    padding: 1.8rem;
+  }
+}
+
+/* ✅ LARGE DEVICES (DESKTOP / WIDESCREEN) */
+@media (min-width: 1025px) {
+  .promotion-nav {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .about-modal-content {
+    padding: 2.5rem;
+  }
+}
+
+/* ✅ EXTRA LARGE DEVICES (TV / PROJECTOR SCREENS) */
+@media (min-width: 1600px) {
+  .promotion-container {
+    font-size: 1.1rem;
+  }
+
+  .promo-btn {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+  }
+
+  .about-modal-content {
+    max-width: 900px;
+    padding: 3rem;
+  }
+}
