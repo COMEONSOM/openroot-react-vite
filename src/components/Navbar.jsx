@@ -54,6 +54,9 @@ const redirectTo = async (url) => {
 
     // ✅ Open safely in new tab after short delay
     await new Promise((resolve) => setTimeout(resolve, 60));
+    console.log("🔹 Redirecting to:", url);
+    console.log("🔹 UID:", getCurrentUID());
+
     window.open(finalURL.toString(), "_blank", "noopener,noreferrer");
   } catch (error) {
     console.error("REDIRECTION FAILED:", error.message);
