@@ -1,6 +1,6 @@
 // ============================================================
 //  NAVBAR COMPONENT — MODERN, CLEAN, PRODUCTION-READY
-//  VERSION: 2025.6 + UID REDIRECT INTEGRATION
+//  VERSION: 2025.11 — STABLE UID REDIRECT HANDLER
 // ============================================================
 
 import React from "react";
@@ -33,7 +33,7 @@ const getCurrentUID = () => {
 };
 
 // ============================================================
-// 🔹 ASYNC REDIRECT FUNCTION — SECURE + UID INJECTION
+// 🔹 ASYNC REDIRECT FUNCTION — UID INJECTION + SAFEGUARD
 // ============================================================
 const redirectTo = async (url) => {
   try {
@@ -44,18 +44,17 @@ const redirectTo = async (url) => {
 
     if (!url || typeof url !== "string") throw new Error("INVALID URL PROVIDED");
 
-    // ✅ APPEND UID PARAM TO SUBSITE LINKS
+    let finalURL = new URL(url);
+
+    // ✅ Get UID & safely append as query param
     const userUID = getCurrentUID();
-    if (userUID) {
-      const parsed = new URL(url);
-      if (!parsed.searchParams.has("uid")) {
-        parsed.searchParams.set("uid", userUID);
-        url = parsed.toString();
-      }
+    if (userUID && !finalURL.searchParams.has("uid")) {
+      finalURL.searchParams.set("uid", encodeURIComponent(userUID));
     }
 
+    // ✅ Open safely in new tab after short delay
     await new Promise((resolve) => setTimeout(resolve, 60));
-    window.open(url, "_blank", "noopener,noreferrer");
+    window.open(finalURL.toString(), "_blank", "noopener,noreferrer");
   } catch (error) {
     console.error("REDIRECTION FAILED:", error.message);
     alert("⚠️ Failed to open link. Please try again later.");
@@ -63,7 +62,7 @@ const redirectTo = async (url) => {
 };
 
 // ============================================================
-// 🔹 ICON COMPONENTS — MATCH SOFTWARE PURPOSE VISUALLY
+// 🔹 ICON COMPONENTS
 // ============================================================
 const Icons = {
   stockAveraging: (
@@ -124,7 +123,7 @@ const Icons = {
 };
 
 // ============================================================
-// 🔹 SOFTWARE DATA (STATIC O(1) STRUCTURE)
+// 🔹 SOFTWARE DATA
 // ============================================================
 const releasedSoftwares = Object.freeze([
   { name: "Stock Averaging", href: "https://comeonsom.github.io/stock-averaging/", icon: Icons.stockAveraging },
