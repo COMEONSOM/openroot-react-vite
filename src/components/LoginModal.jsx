@@ -1,7 +1,7 @@
 // ============================================================
 // HANDLES OAUTH (GOOGLE/FACEBOOK/GITHUB), PROFILE VIEW, LOGOUT
 // ALWAYS RETURNS RAW FIREBASE USER VIA onLogin(user)
-// VERSION: 2025.5 — UPDATED WITH LOCALSTORAGE LOGIN STATE
+// VERSION: 2025.6 — ADDED UID STORAGE FOR SUBSITE SYNC
 // ============================================================
 
 import { useState, useEffect, useRef } from "react";
@@ -24,7 +24,7 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
   // ============================================================
   const [step, setStep] = useState("loading");
   const [userData, setUserData] = useState(null);
-  const [username, setUsername] = useState("guest@ulvoxo");
+  const [username, setUsername] = useState("guest@openroot");
   const [showDetails, setShowDetails] = useState(false);
   const [countdown, setCountdown] = useState(5);
   const [errorMessage, setErrorMessage] = useState("");
@@ -35,13 +35,13 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
   // HELPERS
   // ============================================================
   const getUsername = (user) => {
-    if (user?.email) return user.email.split("@")[0] + "@ulvoxo";
+    if (user?.email) return user.email.split("@")[0] + "@openroot";
     if (user?.phoneNumber)
-      return user.phoneNumber.replace(/[^0-9]/g, "") + "@ulvoxo";
-    return "guest@ulvoxo";
+      return user.phoneNumber.replace(/[^0-9]/g, "") + "@openroot";
+    return "guest@openroot";
   };
 
-  const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : "U");
+  const getInitial = (name) => (name ? name.charAt(0).toUpperCase() : "O");
   const safe = (value, fallback = "Not specified") => value || fallback;
 
   // ============================================================
@@ -64,16 +64,20 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       const wantDetails =
         typeof window !== "undefined" &&
-        sessionStorage.getItem("ulvoxoOpenProfileDetails") === "1";
+        sessionStorage.getItem("openrootOpenProfileDetails") === "1";
 
       if (user) {
         setUserData(user);
         const uName = getUsername(user);
         setUsername(uName);
-        sessionStorage.setItem("ulvoxoUser", uName);
+        sessionStorage.setItem("openrootUser", uName);
 
         // ✅ ADD LOGIN STATE FLAG
         localStorage.setItem("isLoggedIn", "true");
+
+        // ✅ STORE USER UID (USED BY SUBSITES)
+        localStorage.setItem("openrootUserUID", user.uid);
+        sessionStorage.setItem("openrootUserUID", user.uid);
 
         setStep((prev) =>
           prev === "success" || prev === "error" ? prev : "profile"
@@ -81,19 +85,23 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
         setShowDetails(wantDetails ? true : false);
         if (wantDetails) {
           try {
-            sessionStorage.removeItem("ulvoxoOpenProfileDetails");
+            sessionStorage.removeItem("openrootOpenProfileDetails");
           } catch {}
         }
 
         onLogin?.(user);
       } else {
         setUserData(null);
-        setUsername("guest@ulvoxo");
-        sessionStorage.removeItem("ulvoxoUser");
+        setUsername("guest@openroot");
+        sessionStorage.removeItem("openrootUser");
         setShowDetails(false);
 
         // ✅ REMOVE LOGIN STATE FLAG ON LOGOUT
         localStorage.removeItem("isLoggedIn");
+
+        // ✅ REMOVE USER UID (LOGOUT CLEANUP)
+        localStorage.removeItem("openrootUserUID");
+        sessionStorage.removeItem("openrootUserUID");
 
         setStep((prev) =>
           prev === "success" || prev === "error" ? prev : "initial"
@@ -110,12 +118,12 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
     if (step === "profile") {
       const wantDetails =
         typeof window !== "undefined" &&
-        sessionStorage.getItem("ulvoxoOpenProfileDetails") === "1";
+        sessionStorage.getItem("openrootOpenProfileDetails") === "1";
 
       if (wantDetails) {
         setShowDetails(true);
         try {
-          sessionStorage.removeItem("ulvoxoOpenProfileDetails");
+          sessionStorage.removeItem("openrootOpenProfileDetails");
         } catch {}
       }
     }
@@ -153,10 +161,14 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
 
       setUserData(user);
       setUsername(uName);
-      sessionStorage.setItem("ulvoxoUser", uName);
+      sessionStorage.setItem("openrootUser", uName);
 
       // ✅ ADD LOGIN STATE FLAG HERE
       localStorage.setItem("isLoggedIn", "true");
+
+      // ✅ STORE USER UID (USED BY SUBSITES)
+      localStorage.setItem("openrootUserUID", user.uid);
+      sessionStorage.setItem("openrootUserUID", user.uid);
 
       setStep("success");
       onLogin?.(user);
@@ -187,13 +199,17 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
     try {
       await signOut(auth);
       setUserData(null);
-      setUsername("guest@ulvoxo");
-      sessionStorage.removeItem("ulvoxoUser");
+      setUsername("guest@openroot");
+      sessionStorage.removeItem("openrootUser");
       setShowDetails(false);
       setStep("initial");
 
       // ✅ REMOVE LOGIN STATE FLAG ON LOGOUT
       localStorage.removeItem("isLoggedIn");
+
+      // ✅ REMOVE USER UID ON LOGOUT
+      localStorage.removeItem("openrootUserUID");
+      sessionStorage.removeItem("openrootUserUID");
 
       if (onLogout) onLogout();
     } catch (error) {
@@ -208,10 +224,8 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
   // ============================================================
   useEffect(() => {
     const targetLinks = [
-      "https://www.xfactorial.online/",
       "https://xfactorialdi.web.app/",
-      "https://comeonsom.github.io/X-by-ForLoop.com/",
-      "https://comeonsom.github.io/Ulvoxo-Update/",
+      "https://comeonsom.github.io/openroot-helping-hand/",
     ];
     const anchors = document.querySelectorAll("a");
 

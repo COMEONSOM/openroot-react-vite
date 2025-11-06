@@ -1,13 +1,6 @@
 // ============================================================
 //  NAVBAR COMPONENT — MODERN, CLEAN, PRODUCTION-READY
-//  VERSION: 2025.5 + LOGIN-GUARD INTEGRATION
-// ============================================================
-//  FEATURES:
-//   • SHOWS "RELEASED SOFTWARES" SECTION WITH RELEVANT ICONS
-//   • SECURE ASYNC REDIRECTION WITH ERROR HANDLING
-//   • LOGIN CHECK BEFORE ACCESSING ANY TOOL
-//   • STATIC DATA STRUCTURE (O(1) LOOKUP)
-//   • LIGHTWEIGHT, MINIMAL DEPENDENCIES
+//  VERSION: 2025.6 + UID REDIRECT INTEGRATION
 // ============================================================
 
 import React from "react";
@@ -15,9 +8,6 @@ import "./styles/Navbar.css";
 
 // ============================================================
 // 🔹 LOGIN STATUS CHECK FUNCTION
-// ============================================================
-//  ✅ REPLACE THIS WITH YOUR REAL AUTH LOGIC (EXAMPLE: FIREBASE, JWT, ETC.)
-//  FOR NOW, WE’LL USE LOCALSTORAGE FLAG: "isLoggedIn" = true/false
 // ============================================================
 const isUserLoggedIn = () => {
   try {
@@ -28,17 +18,42 @@ const isUserLoggedIn = () => {
 };
 
 // ============================================================
-// 🔹 ASYNC REDIRECT FUNCTION — SECURE + LOGIN PROTECTED
+// 🔹 GET CURRENT USER UID
+// ============================================================
+const getCurrentUID = () => {
+  try {
+    return (
+      sessionStorage.getItem("openrootUserUID") ||
+      localStorage.getItem("openrootUserUID") ||
+      null
+    );
+  } catch {
+    return null;
+  }
+};
+
+// ============================================================
+// 🔹 ASYNC REDIRECT FUNCTION — SECURE + UID INJECTION
 // ============================================================
 const redirectTo = async (url) => {
   try {
-    // 🚨 LOGIN VALIDATION
     if (!isUserLoggedIn()) {
       alert("⚠️ Please log in first to access this tool.");
       return;
     }
 
     if (!url || typeof url !== "string") throw new Error("INVALID URL PROVIDED");
+
+    // ✅ APPEND UID PARAM TO SUBSITE LINKS
+    const userUID = getCurrentUID();
+    if (userUID) {
+      const parsed = new URL(url);
+      if (!parsed.searchParams.has("uid")) {
+        parsed.searchParams.set("uid", userUID);
+        url = parsed.toString();
+      }
+    }
+
     await new Promise((resolve) => setTimeout(resolve, 60));
     window.open(url, "_blank", "noopener,noreferrer");
   } catch (error) {
