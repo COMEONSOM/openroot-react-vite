@@ -59,20 +59,14 @@
   margin-bottom: 0.75rem;
 }
 
-/* GRID ADAPTATION FOR LARGER DEVICES */
-@media (min-width: 768px) {
-  .promotion-nav {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    justify-content: center;
-    max-width: 400px;
-  }
-}
-
 /* ============================================================
    BUTTON STYLES — CONSISTENT ACROSS SCREEN SIZES
    ============================================================ */
 .promo-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
   background: var(--promo-primary);
   color: var(--promo-text-light);
   border: none;
@@ -84,6 +78,16 @@
   transition: var(--promo-transition);
   min-width: 120px;
   box-shadow: var(--promo-shadow-light);
+}
+
+/* GRID ADAPTATION FOR LARGER DEVICES */
+@media (min-width: 768px) {
+  .promotion-nav {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    justify-content: center;
+    max-width: 400px;
+  }
 }
 
 .promo-btn:hover,
