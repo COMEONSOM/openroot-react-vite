@@ -46,47 +46,46 @@
   background-color: transparent;
   font-family: var(--promo-font-base);
 }
-
 /* ============================================================
-   NAVIGATION SECTION — SWITCHES TO GRID ON LARGE DEVICES
+   NAVIGATION SECTION — ALWAYS SIDE-BY-SIDE & RESPONSIVE
    ============================================================ */
 .promotion-nav {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: var(--promo-gap);
-  flex-wrap: wrap;
+  flex-wrap: nowrap; /* ✅ Prevent stacking */
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 500px;
   margin-bottom: 0.75rem;
 }
 
-/* ============================================================
-   BUTTON STYLES — CONSISTENT ACROSS SCREEN SIZES
-   ============================================================ */
+/* RESPONSIVE BEHAVIOR */
 .promo-btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
   background: var(--promo-primary);
   color: var(--promo-text-light);
+  flex: 1; /* ✅ Let both buttons share space equally */
+  min-width: 120px;
+  max-width: 250px;
+  text-align: center;
   border: none;
   padding: 0.7rem 1.5rem;
   border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
   font-size: var(--promo-font-size);
   transition: var(--promo-transition);
-  min-width: 120px;
+  cursor: pointer;
+  font-weight: 500;
   box-shadow: var(--promo-shadow-light);
 }
 
-/* GRID ADAPTATION FOR LARGER DEVICES */
-@media (min-width: 768px) {
+/* RESPONSIVE ADJUSTMENT FOR VERY SMALL DEVICES */
+@media (max-width: 420px) {
   .promotion-nav {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    justify-content: center;
-    max-width: 400px;
+    flex-wrap: wrap; /* ✅ Stack only when screen too narrow */
+  }
+  .promo-btn {
+    width: 100%;
   }
 }
 
