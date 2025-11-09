@@ -5,6 +5,12 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/openroot-helping-hand/**",
+        "destination": "https://comeonsom.github.io/openroot-helping-hand/:splat"
+      }
     ]
   }
 }
