@@ -224,8 +224,8 @@ export default function LoginModal({ onClose, onLogin, onLogout }) {
   // ============================================================
   useEffect(() => {
     const targetLinks = [
-      "https://xfactorialdi.web.app/",
-      "https://comeonsom.github.io/openroot-helping-hand/",
+      "https://openroot-classes.web.app/",
+      "https://ulvoxo.com/openroot-helping-hand/",
     ];
     const anchors = document.querySelectorAll("a");
 

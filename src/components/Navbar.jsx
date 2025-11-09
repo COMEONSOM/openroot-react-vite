@@ -129,13 +129,13 @@ const Icons = {
 // 🔹 SOFTWARE DATA
 // ============================================================
 const releasedSoftwares = Object.freeze([
-  { name: "Stock Averaging", href: "https://comeonsom.github.io/stock-averaging/", icon: Icons.stockAveraging },
-  { name: "SIP Return Analyzer", href: "https://comeonsom.github.io/investment-analyzer/", icon: Icons.sipAnalyzer },
-  { name: "Gold Jewel Price Indicator", href: "https://comeonsom.github.io/Gold-Jewellery-Price-Calculator/", icon: Icons.goldJewel },
-  { name: "Credit Card EMI Calculator", href: "https://comeonsom.github.io/Credit-Card-EMI-Calculator/", icon: Icons.creditEmi },
+  { name: "Stock Averaging", href: "https://ulvoxo.com/stock-averaging/", icon: Icons.stockAveraging },
+  { name: "SIP Return Analyzer", href: "https://ulvoxo.com/return-analyzer/", icon: Icons.sipAnalyzer },
+  { name: "Gold Jewel Price Indicator", href: "https://ulvoxo.com/gold-jewel-price-indicator/", icon: Icons.goldJewel },
+  { name: "Credit Card EMI Calculator", href: "https://ulvoxo.com/credit-card-emi-calculator/", icon: Icons.creditEmi },
   { name: "Travel Expense Manager", href: "https://distribution-of-funds.onrender.com/", icon: Icons.travelExpense },
-  { name: "Makaut Grade Calculator", href: "https://comeonsom.github.io/makaut_grade_converter/", icon: Icons.gradeCalculator },
-  { name: "Helping Hand", href: "https://comeonsom.github.io/openroot-helping-hand/", icon: Icons.helpingHand },
+  { name: "Makaut Grade Calculator", href: "https://ulvoxo.com/makaut-grade-calculator/", icon: Icons.gradeCalculator },
+  { name: "Helping Hand", href: "https://ulvoxo.com/openroot-helping-hand/", icon: Icons.helpingHand },
 ]);
 
 // ============================================================
