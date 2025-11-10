@@ -133,7 +133,7 @@ const releasedSoftwares = Object.freeze([
   { name: "SIP Return Analyzer", href: "https://ulvoxo.com/return-analyzer/", icon: Icons.sipAnalyzer },
   { name: "Gold Jewel Price Indicator", href: "https://ulvoxo.com/gold-jewel-price-indicator/", icon: Icons.goldJewel },
   { name: "Credit Card EMI Calculator", href: "https://ulvoxo.com/credit-card-emi-calculator/", icon: Icons.creditEmi },
-  { name: "Travel Expense Manager", href: "https://distribution-of-funds.onrender.com/", icon: Icons.travelExpense },
+  { name: "Travel Expense Manager", href: "https://ulvoxo.com/travel-expense-manager/", icon: Icons.travelExpense },
   { name: "Makaut Grade Calculator", href: "https://ulvoxo.com/makaut-grade-calculator/", icon: Icons.gradeCalculator },
   { name: "Helping Hand", href: "https://ulvoxo.com/openroot-helping-hand/", icon: Icons.helpingHand },
 ]);

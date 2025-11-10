@@ -34,7 +34,7 @@
       },
       {
         "source": "/travel-expense-manager/**",
-        "destination": "https://distribution-of-funds.onrender.com/",
+        "destination": "https://comeonsom.github.io/tem-openroot/",
         "type": 301
       },
       {
