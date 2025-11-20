@@ -5,8 +5,8 @@
   /*  BRAND COLORS */
   --primary: #4169e1;               /* ROYAL BLUE */
   --primary-light: #6a8dff;         /* LIGHTER BLUE */
-  --background: #f8fafc;            /* APP BACKGROUND */
-  --text-main: #111;                /* MAIN TEXT */
+  --background: #00000000;            /* APP BACKGROUND */
+  --text-main: #ffffff;                /* MAIN TEXT */
   --text-hover: var(--primary);     /* HOVER TEXT COLOR */
 
   /*  CARD GRADIENTS */
@@ -98,7 +98,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--text-main);
+  color:#000000;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   cursor: pointer;

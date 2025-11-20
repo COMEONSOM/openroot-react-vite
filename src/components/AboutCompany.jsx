@@ -16,7 +16,7 @@ import "./styles/AboutCompany.css";
 // ============================================================
 const WORK_AREAS = Object.freeze([
   {
-    title: "OpenRoot Classes",
+    title: "Openroot Classes",
     desc: [
       [
         "WHAT IT IS:",

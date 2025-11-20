@@ -10,12 +10,13 @@
    ============================================================ */
 :root {
   /* BRAND COLORS */
-  --promo-primary: #1e3a8a;           /* ROYAL BLUE */
-  --promo-primary-hover: #3748c9;     /* LIGHTER BLUE HOVER */
+  --promo-primary: linear-gradient(135deg, #58caf0, #23436a);           /* ROYAL BLUE */
+  --promo-primary-hover: #ffffff;     /* LIGHTER BLUE HOVER */
   --promo-bg-dark: rgba(0, 0, 0, 0.85);
   --promo-text-main: #111111;
   --promo-text-light: #f8fafc;
   --promo-border-radius: 16px;
+  --primary-light:#6a8dff;
 
   /* LAYOUT & SPACING */
   --promo-padding: 1.2rem;
@@ -91,7 +92,8 @@
 
 .promo-btn:hover,
 .promo-btn.active {
-  background: var(--promo-primary-hover);
+  background: linear-gradient(135deg, var(--primary-light), #93a9ff);;
+  color:#111111;
   transform: translateY(-2px);
 }
 

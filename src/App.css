@@ -1,4 +1,4 @@
-/* ========= Root Light Theme ========= */
+/* ===================== Root Theme Variables ===================== */
 :root {
   --primary: #2563eb;
   --secondary: #0f172a;
@@ -16,36 +16,36 @@
   --radius: 1rem;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   --transition: 300ms ease;
-  --font-main: 'Inter', system-ui, sans-serif;
+  --font-main: "Inter", system-ui, sans-serif;
 }
 
+/* ===================== Global Reset ===================== */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
-/* {
-  outline: 1px solid red;
-}*/
 
-html, body {
-  max-width: 100vw;
-  overflow-x: visible;
-}
-
-/* ========= Global Styles ========= */
+html,
 body {
   margin: 0;
   padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* ===================== Body ===================== */
+body {
   font-family: var(--font-main);
-  background-color: var(--bg-light);
+  background: var(--bg-light);
   color: var(--text-light);
   line-height: 1.6;
-  overflow-x: visible;
   transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* ========= Typography ========= */
+/* ===================== Typography ===================== */
 h1, h2, h3, h4 {
   color: var(--secondary);
   margin-bottom: 0.5rem;
@@ -56,46 +56,64 @@ p {
   font-size: 1rem;
 }
 
-/* ========= Documentation Link ========= */
 .read-the-docs {
   color: var(--muted);
   font-size: 0.9rem;
   margin-top: 1rem;
 }
 
-/* ========= Responsive ========= */
-@media screen and (max-width: 768px) {
-  #root {
-    padding: 1.5rem;
-  }
-
-  .card {
-    padding: 1.5rem;
-  }
-}
-
-/* Prevent layout overflow from animations/backgrounds */
+/* ===================== Loader Overlay ===================== */
 .loader-overlay {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background-color: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
-  max-width: 100vw;
-  max-height: 100vh;
-  overflow: hidden;
-  box-sizing: border-box;
+  background: #fff;
 }
 
-/* Adaptive and centered animation */
 .loader-animation {
   width: clamp(140px, 25vw, 240px);
   height: clamp(140px, 25vw, 240px);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+}
+
+/* ===================== Layout ===================== */
+section {
+  background: transparent !important;
+}
+
+.app-wrapper {
+  position: relative;
+  min-height: 100vh;
+}
+
+.background-animation {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ===================== Scrollbar ===================== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2d2f50;
+  border-radius: 10px;
+}
+
+/* ===================== Responsive ===================== */
+@media (max-width: 768px) {
+  #root,
+  .card {
+    padding: 1.5rem;
+  }
 }

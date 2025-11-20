@@ -50,7 +50,7 @@ section {
   font-size: 1.6rem;
   text-transform: uppercase;
   margin-bottom: 1.5rem;
-  color: var(--text-color);
+  color:#f8faf8;
   border-bottom: 2px solid var(--primary);
   display: inline-block;
   padding-bottom: 0.4rem;

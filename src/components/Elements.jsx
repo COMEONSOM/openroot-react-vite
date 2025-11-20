@@ -32,7 +32,7 @@ export default function Elements() {
       <div
         className="section-card"
         onClick={() =>
-          window.open("https://www.facebook.com/ulvoxo", "_blank")
+          window.open("https://www.facebook.com/openroothypersite", "_blank")
         }
       >
         <div className="text-group">

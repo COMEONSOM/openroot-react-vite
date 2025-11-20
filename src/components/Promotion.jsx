@@ -117,6 +117,7 @@ export default function Promotion() {
                   <br />
                   <strong>Welcome to Openroot.</strong>
                 </p>
+                <p>Our other registered domains are, ulvoxo.com & xfactorial.online</p>
               </div>
             </motion.div>
           </motion.div>
