@@ -2,15 +2,14 @@
  * ============================================================
  * HEADER COMPONENT — OPENROOT
  * MODERNIZED VERSION (ES2023+, OPTIMIZED, PRODUCTION-READY)
- * VERSION: 2025.5
+ * VERSION: 2025.7
+ * src/components/Header.jsx
  * ============================================================
  * FEATURES:
- * MODULAR STRUCTURE — REUSABLE LOGIC & HANDLERS
  * FIREBASE AUTH — ROBUST SESSION SYNC
  * ERROR HANDLING — EDGE-CASE SAFE
  * TIME COMPLEXITY — O(1) OPERATIONS
  * PERFORMANCE — MINIMAL RE-RENDERS
- * COMMENTS — ALL CAPS FOR EASY DEV UNDERSTANDING
  * ============================================================
  */
 
@@ -123,7 +122,7 @@ const Header = () => {
    */
   const handleProfileClick = useCallback(() => {
     try {
-      sessionStorage.setItem("ulvoxoOpenProfileDetails", "1");
+      sessionStorage.setItem("openrootOpenProfileDetails", "1"); // 🔥 UPDATED KEY
       setIsLoginOpen(true);
     } catch (err) {
       console.error("PROFILE SESSION ERROR:", err);
@@ -160,7 +159,6 @@ const Header = () => {
            ============================================================ */}
       <div className="auth-area relative">
         {!user ? (
-          // SHOW LOGIN BUTTON WHEN NOT AUTHENTICATED
           <button
             className="login-animation"
             onClick={handleLoginClick}
@@ -175,7 +173,6 @@ const Header = () => {
             <span className="login-hint">LOGIN HERE →</span>
           </button>
         ) : (
-          // SHOW PROFILE BUTTON WHEN LOGGED IN
           <button
             className="profile-button"
             onClick={handleProfileClick}
@@ -186,9 +183,6 @@ const Header = () => {
         )}
       </div>
 
-      {/* ============================================================
-           MODAL: LOGIN / PROFILE
-           ============================================================ */}
       {isLoginOpen && (
         <LoginModal
           onClose={() => setIsLoginOpen(false)}

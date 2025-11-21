@@ -1,12 +1,13 @@
 // ============================================================
 // ABOUTCOMPANY COMPONENT — SIMPLIFIED (WORK AREAS + WHY STAND OUT)
 // AUTHOR: TEAM OPENROOT (2026 EDITION)
-// VERSION: 2025.5
+// VERSION: 2025.7
+// src/components/AboutCompany.jsx
 // ============================================================
-
 import React from "react";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
+import { Helmet } from "react-helmet-async";
 import bulletAnimation from "../animations/bulletpoints.json";
 import newTagAnimation from "../animations/newtaganimation.json";
 import "./styles/AboutCompany.css";
@@ -79,6 +80,18 @@ const renderParagraphs = (descArray = []) =>
 // ============================================================
 export default function AboutCompany() {
   return (
+  <>
+    <Helmet>
+      <title>About Openroot | Empowering Students & Small Businesses</title>
+      <meta
+        name="description"
+        content="Learn about Openroot — a technology and education platform helping students and MSMEs through affordable courses and powerful software solutions designed for real-world growth."
+      />
+      <meta
+        name="keywords"
+        content="Openroot, Openroot Hypersite, Travel Expense Manager, Openroot Classes, Software Solutions, MSME software, investing education, prompt engineering, business automation"
+      />
+    </Helmet>
     <section className="about-company-section">
       {/* ====================================================== */}
       {/* WORK AREA GRID */}
@@ -129,7 +142,7 @@ export default function AboutCompany() {
       {/* WHY OPENROOT STANDS OUT */}
       {/* ====================================================== */}
       <motion.div
-        className="why-ulvoxo"
+        className="why-openroot"
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
@@ -153,24 +166,18 @@ export default function AboutCompany() {
           </motion.div>
         ))}
 
-        <div className="why-ulvoxo-final">
+        <div className="why-openroot-final">
           At <strong>OpenRoot</strong>, we believe in transforming how people and
           small businesses use technology — through innovation, education, and
           accessibility. Thank you for joining us on this journey of growth and
           empowerment.
         </div>
 
-        <p className="join-ulvoxo">
+        <p className="join-openroot">
           Join Us And Experience The <strong>Openroot</strong> Difference!
         </p>
       </motion.div>
     </section>
+  </>
   );
 }
-
-// ============================================================
-// NOTES:
-// • Removed intro + growth chart for modular separation
-// • Component only renders “Work Area” + “Why Stand Out”
-// • Still optimized for smooth animations and O(N) traversal
-// ============================================================

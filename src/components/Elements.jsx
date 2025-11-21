@@ -1,4 +1,9 @@
-// Elements.jsx
+// ============================================================
+// ELEMENTS COMPONENT 
+// AUTHOR: TEAM OPENROOT (2026 EDITION)
+// VERSION: 2025.7
+// src/components/Elements.jsx
+// ============================================================
 import { useEffect, useRef } from "react";
 import "./styles/Elements.css";
 
@@ -41,7 +46,13 @@ export default function Elements() {
           </div>
           <div className="bio-container">
             <p className="bio emergency-bio">
-              Openroot Has A Heart is where stories breathe—unfiltered, unpolished. It’s not a platform, not a brand—just a space where emotions are allowed to exist without explanation. We share moments of love, loss, hope, fear, and quiet courage. Some stories comfort, others ache—but all remind us that behind every face is a heart carrying something unseen. This isn’t about being perfect. It’s about being real.
+              Openroot Has A Heart is where stories breathe—unfiltered,
+              unpolished. It’s not a platform, not a brand—just a space where
+              emotions are allowed to exist without explanation. We share
+              moments of love, loss, hope, fear, and quiet courage. Some stories
+              comfort, others ache—but all remind us that behind every face is a
+              heart carrying something unseen. This isn’t about being perfect.
+              It’s about being real.
             </p>
           </div>
         </div>

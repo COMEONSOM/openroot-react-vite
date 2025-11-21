@@ -1,6 +1,7 @@
 // ============================================================
 //  NAVBAR COMPONENT — MODERN, CLEAN, PRODUCTION-READY
-//  VERSION: 2025.11 — STABLE UID REDIRECT HANDLER
+//  VERSION: 2025.7 — STABLE UID REDIRECT HANDLER
+//  src/components/Navbar.jsx
 // ============================================================
 
 import React from "react";

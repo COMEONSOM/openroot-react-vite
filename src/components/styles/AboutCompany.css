@@ -155,9 +155,9 @@
 }
 
 /* ============================================================
-   WHY ULVOXO SECTION
+   WHY OPENROOT SECTION
    ============================================================ */
-.why-ulvoxo {
+.why-openroot {
   background-color:#00000000;
   padding: var(--spacing-xs) var(--spacing-xs);
   max-width: 800px;
@@ -167,7 +167,7 @@
   z-index: 1;
 }
 
-.why-ulvoxo h2 {
+.why-openroot h2 {
   font-size: var(--font-size-xl);
   text-align: center;
   color: var(--color-primary);
@@ -208,14 +208,14 @@
 /* ============================================================
    FINAL STATEMENTS & CTA
    ============================================================ */
-.why-ulvoxo-final {
+.why-openroot-final {
   text-align: center;
   margin-top: var(--spacing-lg);
   font-size: var(--font-size-base);
   color: #f8faf8;;
 }
 
-.join-ulvoxo {
+.join-openroot {
   text-align: center;
   font-weight: 700;
   font-size: var(--font-size-lg);

@@ -1,7 +1,8 @@
 // ============================================================
 // HANDLES OAUTH (GOOGLE/FACEBOOK/GITHUB), PROFILE VIEW, LOGOUT
 // ALWAYS RETURNS RAW FIREBASE USER VIA onLogin(user)
-// VERSION: 2025.6 — ADDED UID STORAGE FOR SUBSITE SYNC
+// VERSION: 2025.7 — ADDED UID STORAGE FOR SUBSITE SYNC
+// src/components/LoginModal.jsx
 // ============================================================
 
 import { useState, useEffect, useRef } from "react";

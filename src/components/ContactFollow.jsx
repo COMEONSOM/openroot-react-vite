@@ -1,3 +1,9 @@
+// ============================================================
+// CONTACT-FOLLOW COMPONENT
+// AUTHOR: TEAM OPENROOT (2026 EDITION)
+// VERSION: 2025.7
+// src/components/ContactFollow.jsx
+// ============================================================
 import { useEffect, useRef } from "react";
 import Lottie from "lottie-react";
 import gsap from "gsap";
