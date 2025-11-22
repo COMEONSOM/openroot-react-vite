@@ -14,7 +14,7 @@ export default function Promotion() {
   const [activeSection, setActiveSection] = useState("none");
 
   const handleRedirect = () => {
-    window.location.href = "https://openroot-classes.web.app/";
+    window.location.href = "https://openroot-classes-firebase.web.app";
   };
 
   const handleClose = () => setActiveSection("none");
