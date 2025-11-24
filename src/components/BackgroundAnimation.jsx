@@ -1,9 +1,9 @@
 // ============================================================
 // BACKGROUND-ANIMATION COMPONENT — OPENROOT SCI-FI CORE (ORBIT CUBE EDITION)
 // AUTHOR: TEAM OPENROOT (2026 EDITION)
-// VERSION: 2025.7
+// VERSION: 2025.8 — NO SATURN RING
 // src/components/BackgroundAnimation.jsx
-// ===========================================================
+// ============================================================
 import React, { useRef, useEffect } from "react";
 import * as THREE from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer";
@@ -21,19 +21,26 @@ export default function CalmPremiumCore() {
 
     // ================= Renderer =================
     const renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setPixelRatio(Math.max(1, window.devicePixelRatio || 1));
+    renderer.setPixelRatio(Math.min(1.75, window.devicePixelRatio || 1));
     renderer.setSize(mount.clientWidth, mount.clientHeight);
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 0.85;
+    renderer.toneMappingExposure = 0.9;
+    renderer.physicallyCorrectLights = true;
     mount.appendChild(renderer.domElement);
 
     // ================= Scene + Camera =================
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0x020308);
 
-    const camera = new THREE.PerspectiveCamera(38, mount.clientWidth / mount.clientHeight, 0.1, 8000);
+    const camera = new THREE.PerspectiveCamera(
+      38,
+      mount.clientWidth / mount.clientHeight,
+      0.1,
+      8000
+    );
     camera.position.set(0, 26, 240);
+    scene.add(camera);
 
     // ================= Post Processing =================
     const composer = new EffectComposer(renderer);
@@ -41,7 +48,9 @@ export default function CalmPremiumCore() {
 
     const bloom = new UnrealBloomPass(
       new THREE.Vector2(mount.clientWidth, mount.clientHeight),
-      0.55, 0.25, 0.3
+      0.55,
+      0.25,
+      0.3
     );
     bloom.threshold = 0.4;
     bloom.strength = 0.55;
@@ -62,7 +71,7 @@ export default function CalmPremiumCore() {
     dir.position.set(50, 80, 30);
     scene.add(dir);
 
-    // ================= Blinking Stars =================
+    // ================= Blinking Stars (STATIC) =================
     const starGeo = new THREE.BufferGeometry();
     const starCount = 800;
     const starPos = new Float32Array(starCount * 3);
@@ -106,7 +115,7 @@ export default function CalmPremiumCore() {
     });
 
     const stars = new THREE.Points(starGeo, starMat);
-    scene.add(stars);
+    camera.add(stars);
 
     // ================= Core =================
     const coreGroup = new THREE.Group();
@@ -165,7 +174,11 @@ export default function CalmPremiumCore() {
     const coreLight = new THREE.PointLight(0x66eaff, 1.1, 500, 2);
     coreGroup.add(coreLight);
 
-    // ================= ORBITING CUBE SATELLITE =================
+    const rimLight = new THREE.PointLight(0x8844ff, 0.7, 260, 2.2);
+    rimLight.position.set(0, 0, -40);
+    coreGroup.add(rimLight);
+
+    // ================= ORBITING CUBE =================
     const cubeGeo = new THREE.BoxGeometry(2.2, 2.2, 2.2);
     const cubeMat = new THREE.MeshStandardMaterial({
       color: 0x66ccff,
@@ -178,7 +191,7 @@ export default function CalmPremiumCore() {
     coreGroup.add(cube);
 
     let orbitAngle = 0;
-    const orbitRadius = 28;
+    const orbitRadius = 28; // still used only for cube path
 
     // ================= HUD =================
     const hudCanvas = document.createElement("canvas");
@@ -206,14 +219,23 @@ export default function CalmPremiumCore() {
     function updateHUD() {
       const elapsed = (performance.now() - startTime) / 1000;
       hudCtx.clearRect(0, 0, 512, 128);
+
       hudCtx.fillStyle = "rgba(170,230,255,0.95)";
       hudCtx.font = "700 20px Inter, system-ui";
       hudCtx.fillText("OPEN CORE", 20, 36);
+
       hudCtx.fillStyle = "rgba(140,200,255,0.95)";
       hudCtx.font = "600 16px Inter, system-ui";
       hudCtx.fillText(`uptime: ${elapsed.toFixed(1)}s`, 20, 70);
+
       hudCtx.fillStyle = "rgba(210,170,255,0.9)";
       hudCtx.fillText(`iter: ${iteration}`, 20, 96);
+
+      hudCtx.fillStyle = "rgba(80,140,255,0.05)";
+      for (let y = 0; y < 128; y += 2) {
+        hudCtx.fillRect(0, y, 512, 1);
+      }
+
       hudTex.needsUpdate = true;
     }
 
@@ -229,14 +251,15 @@ export default function CalmPremiumCore() {
       };
     }
 
-    function stepMotion(dt) {
-      const g = gradient(state.x, state.y, performance.now());
+    function stepMotion(dt, now) {
+      const g = gradient(state.x, state.y, now);
       state.vx = state.vx * 0.92 + g.gx * dt * 0.00012;
       state.vy = state.vy * 0.92 + g.gy * dt * 0.00012;
       state.x += state.vx;
       state.y += state.vy;
       state.x = THREE.MathUtils.clamp(state.x, 0.04, 0.96);
       state.y = THREE.MathUtils.clamp(state.y, 0.04, 0.96);
+
       const px = (state.x - 0.5) * 90;
       const py = (state.y - 0.5) * 50;
       state.path.push(new THREE.Vector3(px, py, 0));
@@ -252,23 +275,36 @@ export default function CalmPremiumCore() {
       const dt = now - last;
       last = now;
 
-      camera.position.x = Math.sin(now * 0.00012) * 7;
+      const t = now * 0.00012;
+
+      // Gyro camera
+      camera.position.x = Math.sin(t) * 9;
+      camera.position.z = 240 + Math.cos(t * 0.6) * 8;
       camera.position.y = 26 + Math.sin(now * 0.00009) * 3;
-      camera.lookAt(0, 10, 0);
 
+      camera.lookAt(
+        new THREE.Vector3(0, 10 + Math.sin(now * 0.0004) * 0.5, 0)
+      );
+
+      // Stars blink only
       starMat.uniforms.time.value = now;
-      stars.rotation.y += 0.00008;
 
-      stepMotion(dt);
+      // Motion update
+      stepMotion(dt, now);
 
       const lastP = state.path[state.path.length - 1] || new THREE.Vector3();
       const target = new THREE.Vector3(lastP.x, lastP.y + 6, -14);
       coreGroup.position.lerp(target, 0.08);
 
+      // Core pulse
+      const pulse = (Math.sin(now * 0.003 * 2.2) + 1) * 0.5;
+      const pulseScale = 1 + pulse * 0.04;
+      core.scale.set(pulseScale, pulseScale, pulseScale);
       core.rotation.y += 0.0025;
+
       shellMat.uniforms.iTime.value = now * 0.001;
 
-      // --- ORBITING CUBE MOTION ---
+      // Cube orbit (no ring)
       orbitAngle += dt * 0.0006;
       cube.position.set(
         Math.cos(orbitAngle) * orbitRadius,
@@ -283,10 +319,9 @@ export default function CalmPremiumCore() {
       coreLight.intensity = 1.0 + motion * 0.8;
 
       if (Math.random() < 0.015) iteration++;
-      updateHUD();
 
+      updateHUD();
       composer.render();
-      requestAnimationFrame(frame);
     }
 
     function resize() {
@@ -305,14 +340,18 @@ export default function CalmPremiumCore() {
 
     window.addEventListener("resize", resize);
     resize();
-    requestAnimationFrame(frame);
+
+    renderer.setAnimationLoop(frame);
 
     return () => {
       running = false;
       window.removeEventListener("resize", resize);
+      renderer.setAnimationLoop(null);
       renderer.dispose();
       composer.dispose();
-      try { mount.removeChild(renderer.domElement); } catch {}
+      try {
+        mount.removeChild(renderer.domElement);
+      } catch {}
     };
   }, []);
 
