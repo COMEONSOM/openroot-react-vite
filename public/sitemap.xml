@@ -6,23 +6,7 @@
     <loc>https://openroot.in/</loc>
     <priority>1.0</priority>
   </url>
-
-  <!-- INTERNAL REACT SECTIONS (anchors behave like content blocks) -->
-  <url>
-    <loc>https://openroot.in/#about-company</loc>
-    <priority>0.80</priority>
-  </url>
-
-  <url>
-    <loc>https://openroot.in/#elements</loc>
-    <priority>0.80</priority>
-  </url>
-
-  <url>
-    <loc>https://openroot.in/#contact-follow</loc>
-    <priority>0.80</priority>
-  </url>
-
+  
   <!-- EXTERNAL TOOL PAGES -->
   <url>
     <loc>https://openroot.in/stock-averaging/</loc>

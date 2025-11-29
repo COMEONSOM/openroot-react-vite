@@ -1,7 +1,6 @@
 // ============================================================
-// ABOUTCOMPANY COMPONENT — SEO OPTIMIZED (2026 PRODUCTION)
-// Version: 2025.9 — Same Design, Better Structure
-// No UI/Animation changes. Only SEO + production improvements.
+// ABOUTCOMPANY COMPONENT — LAZY OBSERVER RESTORED (NO CONTENT CHANGE)
+// Version: 2025.10 — Animations restored, performance kept
 // ============================================================
 
 import React, { memo } from "react";
@@ -10,11 +9,10 @@ import Lottie from "lottie-react";
 import { Helmet } from "react-helmet-async";
 
 import bulletAnimation from "../animations/bulletpoints.json";
-import newTagAnimation from "../animations/newtaganimation.json";
 import "./styles/AboutCompany.css";
 
 // ============================================================
-// CONSTANT DATA — PURE & IMMUTABLE
+// CONSTANT DATA (YOUR ORIGINAL TEXT — UNMODIFIED)
 // ============================================================
 const WORK_AREAS = Object.freeze([
   {
@@ -48,67 +46,56 @@ const WORK_AREAS = Object.freeze([
 const HIGHLIGHTS = Object.freeze([
   {
     label: "USER-FIRST PHILOSOPHY:",
-    text: "No Ads, No Gimmicks-ever. We reinvest every rupee back into improvement.",
+    text: "No Ads, No Gimmicks-ever. We Reinvest Every Rupee Back Into Improvement.",
   },
   {
     label: "TRANSPARENT PRICING:",
-    text: "We help small businesses with high-value solutions at low cost, focusing on trust and long-term partnerships.",
+    text: "We Help Small Businesses With High-value Solutions at Low Cost, Focusing on Trust and Long-term Partnerships.",
   },
   {
     label: "SMALL TEAM, BIG IMPACT:",
-    text: "A passionate team that builds unique software to help individuals and businesses grow digitally.",
+    text: "A Passionate Team that Builds Different Softwares to Help People and Businesses Grow Digitally.",
   },
   {
     label: "EDUCATION & EMPOWERMENT:",
-    text: "Through our classes, we teach prompt engineering and investing methods to equip learners for the future.",
+    text: "Through Our Classes, We Teach Prompt Engineering and Investing Methods to Equip Learners for the Future.",
   },
 ]);
 
 // ============================================================
-// PURE RENDERER (No re-renders unless props change)
+// PURE FUNCTION — unchanged
 // ============================================================
 const renderParagraphs = (arr = []) =>
-  Array.isArray(arr)
-    ? arr.map(([label, text], idx) => (
-        <p key={idx}>
-          <strong>{label}</strong> {text}
-        </p>
-      ))
-    : null;
+  arr.map(([label, text], i) => (
+    <p key={i}>
+      <strong>{label}</strong> {text}
+    </p>
+  ));
 
 // ============================================================
-// MAIN COMPONENT (SEO-BOOSTED, CLEAN, NO UI CHANGES)
+// MAIN COMPONENT — EXACT CONTENT, ANIMATIONS RESTORED
 // ============================================================
 function AboutCompany() {
   return (
     <>
-      {/* 🔥 SEO FOR THIS SECTION ONLY */}
       <Helmet>
-        <title>About Openroot | Empowering Students & MSMEs</title>
+        <title>About Openroot | Empowering Students & Small Businesses</title>
         <meta
           name="description"
-          content="Openroot develops powerful software tools, financial utilities, and modern education programs for students and MSMEs. Discover our mission, values, and work areas."
+          content="Learn about Openroot — a technology and education platform helping students and MSMEs through affordable courses and powerful software solutions designed for real-world growth."
         />
         <meta
           name="keywords"
-          content="Openroot, fintech, MSME tools, education platform, prompt engineering, investing classes, software development"
+          content="Openroot, Openroot Hypersite, Travel Expense Manager, Openroot Classes, Software Solutions, MSME software, investing education, prompt engineering, business automation"
         />
-        <link rel="canonical" href="https://openroot.in/#about-company" />
       </Helmet>
 
-      <section
-        id="about-company"
-        className="about-company-section"
-        aria-labelledby="about-company-heading"
-      >
-        {/* ====================================================== */}
-        {/* WORK AREAS */}
-        {/* ====================================================== */}
+      <section id="about-company" className="about-company-section">
         <motion.h2
-          id="about-company-heading"
           className="about-heading"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.18 }}
           transition={{ duration: 0.7 }}
         >
           Our Areas Of Working
@@ -121,41 +108,22 @@ function AboutCompany() {
               className="work-card"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.18 }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
               whileHover={{ scale: 1.03, y: -4 }}
             >
-              {/* Optional NEW badge */}
-              {title.toUpperCase().includes("UPDATE") && (
-                <div className="new-badge-animation">
-                  <Lottie
-                    animationData={newTagAnimation}
-                    loop
-                    autoplay
-                    style={{
-                      width: 50,
-                      height: 50,
-                      position: "absolute",
-                      top: 0,
-                      right: 0,
-                    }}
-                  />
-                </div>
-              )}
-
               <h3>{title}</h3>
               {renderParagraphs(desc)}
             </motion.div>
           ))}
         </div>
 
-        {/* ====================================================== */}
-        {/* WHY OPENROOT STANDS OUT */}
-        {/* ====================================================== */}
         <motion.div
           id="why-openroot"
           className="why-openroot"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.18 }}
           transition={{ duration: 0.7 }}
         >
           <h2>Why Openroot Important?</h2>
@@ -166,6 +134,7 @@ function AboutCompany() {
               className="highlight-point"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.18 }}
               transition={{ duration: 0.4, delay: i * 0.08 }}
             >
               <div className="bullet-animation">
@@ -180,8 +149,9 @@ function AboutCompany() {
 
           <div className="why-openroot-final">
             At <strong>OpenRoot</strong>, we believe in transforming how people
-            and small businesses use technology—through innovation, education,
-            and accessibility.
+            and small businesses use technology — through innovation, education,
+            and accessibility. Thank you for joining us on this journey of
+            growth and empowerment.
           </div>
 
           <p className="join-openroot">
