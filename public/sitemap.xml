@@ -6,7 +6,7 @@
     <loc>https://openroot.in/</loc>
     <priority>1.0</priority>
   </url>
-  
+
   <!-- EXTERNAL TOOL PAGES -->
   <url>
     <loc>https://openroot.in/stock-averaging/</loc>
@@ -41,12 +41,6 @@
   <url>
     <loc>https://openroot.in/openroot-helping-hand/</loc>
     <priority>0.90</priority>
-  </url>
-
-  <!-- EDUCATION SITE -->
-  <url>
-    <loc>https://openroot-classes-firebase.web.app/</loc>
-    <priority>0.70</priority>
   </url>
 
 </urlset>
