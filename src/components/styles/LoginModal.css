@@ -1,109 +1,100 @@
 /* ============================================================
-   LOGIN MODAL — REFACTORED, COMMENTED, AND RESPONSIVE
-   VERSION: 2025.5 (REFORMATTED)
-   GOALS:
-     - KEEP VISUALS/BEHAVIORS THE SAME
-     - CONSOLIDATE VARIABLES, REMOVE DUPLICATES
-     - USE FLEX / GRID INTENTIONALLY (DOCUMENT WHEN/WHY)
-     - CLEANUP AVATAR WRAPPERS (REMOVE UNWANTED BACKGROUNDS)
-     - ALL COMMENTS IN CAPITAL LETTERS
+   LOGIN MODAL — OPENROOT 2026 ULTRA BUILD
+   PERFORMANCE • ACCESSIBILITY • CONSISTENCY • CORE WEB VITALS SAFE
    ============================================================ */
 
 /* ============================================================
-   THEME VARIABLES (ONE PLACE TO CHANGE COLORS/MEASUREMENTS)
+   THEME VARIABLES — CENTRALIZED CONTROL
    ============================================================ */
 :root {
-  /* CORE COLORS */
-  --lm-bg: rgba(255,255,255,0.45);         /* MODAL BACKDROP CARD BACKGROUND */
-  --lm-overlay: rgba(20,20,20,0.45);       /* OUTER DARK OVERLAY */
-  --lm-text: #111111;                      /* PRIMARY TEXT */
-  --lm-subtext: #555555;                   /* SECONDARY TEXT */
-  --lm-white: #ffffff;
-  --lm-primary: #1d4ed8;                   /* PRIMARY BUTTON / BRAND */
+  /* COLORS */
+  --lm-bg: rgba(255,255,255,0.55);
+  --lm-overlay: rgba(20,20,20,0.50);
+  --lm-text: #111;
+  --lm-subtext: #555;
+  --lm-white: #fff;
+  --lm-primary: #1d4ed8;
   --lm-primary-hover: #2563eb;
   --lm-success: #2e7d32;
   --lm-danger: #e53935;
   --lm-danger-hover: #c62828;
-  --lm-accent: #6366f1;                    /* ACCENT USED FOR SHADOWS / HOVER */
 
   /* RADIUS & SHADOWS */
-  --lm-radius-card: 18px;
-  --lm-radius-pill: 30px;
-  --lm-radius-sm: 8px;
+  --lm-radius-card: 20px;
+  --lm-radius-sm: 10px;
+  --lm-radius-pill: 32px;
+  --lm-shadow-1: 0 2px 8px rgba(0,0,0,0.08);
+  --lm-shadow-2: 0 6px 20px rgba(0,0,0,0.12);
+  --lm-shadow-3: 0 10px 38px rgba(0,0,0,0.18);
 
-  --lm-shadow-1: 0 2px 6px rgba(0,0,0,0.08);
-  --lm-shadow-2: 0 6px 18px rgba(0,0,0,0.12);
-  --lm-shadow-3: 0 10px 30px rgba(0,0,0,0.15);
-
-  /* TYPOGRAPHY SCALES */
-  --lm-font: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  /* TYPOGRAPHY */
+  --lm-font: Inter, system-ui, sans-serif;
   --lm-fs-xs: 0.75rem;
-  --lm-fs-sm: 0.875rem;
+  --lm-fs-sm: 0.85rem;
   --lm-fs-md: 1rem;
-  --lm-fs-lg: 1.125rem;
-  --lm-fs-xl: 1.6rem;
+  --lm-fs-lg: 1.25rem;
+  --lm-fs-xl: 1.7rem;
 
-  /* LAYOUT SCALES */
-  --lm-space-xs: 0.5rem;
+  /* SPACING */
+  --lm-space-xs: 0.45rem;
   --lm-space-sm: 0.75rem;
   --lm-space-md: 1rem;
   --lm-space-lg: 1.5rem;
 
-  /* AVATAR */
-  --lm-avatar-sm: 60px;
-  --lm-avatar-md: 72px;
-  --lm-avatar-lg: 100px;
+  /* AVATAR SIZES */
+  --lm-avatar-sm: 62px;
+  --lm-avatar-md: 74px;
+  --lm-avatar-lg: 104px;
 }
 
 /* ============================================================
-   GLOBAL RESET & BASE LAYOUT
-   - KEEP GLOBAL RESET MINIMAL (ONLY WHAT THIS COMPONENT NEEDS)
+   OVERLAY — NO LAYOUT SHIFT & GPU-ACCELERATED
    ============================================================ */
-* { box-sizing: border-box; }
-html, body { height: 100%; }
 .modal-overlay {
-  /* FULLSCREEN OVERLAY (CENTERS THE MODAL) */
   position: fixed;
   inset: 0;
   width: 100vw;
   height: 100vh;
   background: var(--lm-overlay);
-  backdrop-filter: blur(6px);
+  backdrop-filter: blur(7px);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   z-index: 2000;
-  padding: 1rem; /* SMALL SAFE PADDING FOR SMALL SCREENS */
+  padding: 1rem;
+
+  /* Prevent CLS */
+  will-change: opacity;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ============================================================
    MODAL CONTAINER
-   - USE FLEX FOR VERTICAL FLOW; SWITCH TO GRID ONLY IF NEEDED
-   - CHOICE: FLEX IS APPROPRIATE SINCE CONTENT STACKS VERTICALLY
    ============================================================ */
 .modal-container {
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
+  padding: 2.2rem;
   background: var(--lm-bg);
-  padding: 2.25rem 2rem;
   border-radius: var(--lm-radius-card);
   box-shadow: var(--lm-shadow-3);
-  color: var(--lm-text);
+
   display: flex;
   flex-direction: column;
   gap: var(--lm-space-md);
-  position: relative;
+
   font-family: var(--lm-font);
   text-align: center;
-  animation: fadeIn 0.45s ease;
-  /* ENSURE CONTRAST WHEN TRANSLUCENT BACKGROUND IS USED */
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
+
+  /* Animation */
+  animation: fadeIn 0.35s ease;
+  transform: translateY(0);
+
+  /* Backdrop inside modal for translucency */
+  backdrop-filter: blur(12px);
 }
 
-/* LOADER VARIANT */
+/* Loader container */
 .modal-loader {
   min-height: 160px;
   display: grid;
@@ -111,357 +102,296 @@ html, body { height: 100%; }
 }
 
 /* ============================================================
-   CLOSE BUTTON
-   - ABSOLUTE POSITIONING TO AVOID AFFECTING FLOW
+   CLOSE BUTTON — FLOATING CIRCLE
    ============================================================ */
 .modal-close {
   position: absolute;
-  top: -18px;
-  right: -18px;
-  width: 40px;
-  height: 40px;
-  background-color: var(--lm-primary);
+  top: -14px;
+  right: -14px;
+  width: 42px;
+  height: 42px;
+
+  background: var(--lm-primary);
   color: var(--lm-white);
-  border: none;
+
   border-radius: 50%;
-  font-size: 1.4rem;
-  font-weight: 700;
+  border: none;
+  font-size: 1.45rem;
+  font-weight: 800;
+
   display: grid;
   place-items: center;
-  box-shadow: var(--lm-shadow-2);
   cursor: pointer;
-  transition: transform .18s ease, background-color .18s ease;
-  z-index: 10;
+
+  box-shadow: var(--lm-shadow-2);
+  transition: transform 0.2s ease;
 }
-.modal-close:hover { transform: scale(1.08); background-color: var(--lm-primary-hover); }
-.modal-close:focus-visible { outline: 3px solid rgba(29,78,216,0.18); outline-offset: 2px; }
+
+.modal-close:hover {
+  transform: scale(1.12);
+}
 
 /* ============================================================
-   TYPOGRAPHY — HIERARCHY FOR THE MODAL
+   TYPOGRAPHY
    ============================================================ */
 .modal-container h2 {
-  margin: 0;
   font-size: var(--lm-fs-xl);
   font-weight: 700;
-  color: #000;
-}
-.modal-container h3 {
   margin: 0;
+}
+
+.modal-container h3 {
   font-size: var(--lm-fs-lg);
   font-weight: 700;
-  color: var(--lm-text);
+  margin: 0;
 }
-.modal-container p { margin: 0.35rem 0; font-size: var(--lm-fs-md); }
+
+.modal-container p {
+  font-size: var(--lm-fs-md);
+  margin: 0.35rem 0;
+}
 
 /* ============================================================
    OAUTH BUTTONS
-   - FULL WIDTH STACK (FLEX COLUMN) FOR MOBILE; SWITCH TO GRID ONLY WHEN SHOWING >3
-   - KEEP BUTTON STYLES CONSISTENT & ACCESSIBLE
    ============================================================ */
 .oauth-buttons {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  margin-top: 1rem;
+  gap: 0.65rem;
 }
 
 .oauth-btn {
   width: 100%;
   padding: 12px;
-  border-radius: 12px;
-  font-weight: 700;
   font-size: var(--lm-fs-md);
-  color: var(--lm-white);
+  font-weight: 700;
+  border-radius: 12px;
+  color: white;
   border: none;
   cursor: pointer;
-  transition: transform .12s ease, filter .18s ease;
-}
-.oauth-btn:hover { transform: translateY(-1px); }
-.oauth-btn:focus-visible { outline: 3px solid rgba(29,78,216,0.18); outline-offset: 2px; }
 
-/* PROVIDER COLORS (KEEP SEPARATE CLASSES FOR EASY OVERRIDE) */
-.oauth-btn.google   { background-color: #db4437; }
-.oauth-btn.facebook { background-color: #4267b2; }
-.oauth-btn.github   { background-color: #24292e; }
-.oauth-btn.google:hover,
-.oauth-btn.facebook:hover,
-.oauth-btn.github:hover { filter: brightness(0.95); }
+  transition: transform 0.18s ease;
+  will-change: transform;
+}
+
+.oauth-btn:hover {
+  transform: translateY(-2px);
+}
+
+.oauth-btn.google   { background: #db4437; }
+.oauth-btn.facebook { background: #4267b2; }
+.oauth-btn.github   { background: #24292e; }
 
 /* ============================================================
    SUCCESS / ERROR STATES
-   - CENTERED, GRID IS OK (SINGLE BLOCK)
    ============================================================ */
-.success-container {
+.success-container,
+.error-container {
   display: grid;
   place-items: center;
   text-align: center;
-  animation: fadeIn .5s ease;
+  animation: fadeIn 0.4s ease;
 }
 
-.success-text {
-  margin-top: .75rem;
-  font-weight: 800;
+.success-text,
+.error-text {
   font-size: var(--lm-fs-lg);
-  color: var(--lm-success);
-  text-shadow: 0 1px 1px rgba(0,0,0,0.06);
+  font-weight: 800;
 }
-.success-subtext { color: var(--lm-subtext); font-size: var(--lm-fs-sm); margin-top: .35rem; }
 
-.error-text { margin-top: .75rem; font-weight: 800; font-size: var(--lm-fs-lg); color: var(--lm-danger); }
-.error-subtext { color: var(--lm-subtext); font-size: var(--lm-fs-sm); margin-top: .35rem; max-width: 90%; margin-left: auto; margin-right: auto; }
+.success-text { color: var(--lm-success); }
+.error-text   { color: var(--lm-danger); }
 
 .retry-btn {
-  background-color: var(--lm-primary);
-  color: var(--lm-white);
-  padding: .55rem 1.2rem;
-  border-radius: 10px;
+  background: var(--lm-primary);
+  color: white;
+  padding: 0.6rem 1.3rem;
   border: none;
-  font-weight: 800;
+  border-radius: 12px;
+  font-weight: 700;
   cursor: pointer;
-  transition: transform .12s ease, background .18s ease;
+  transition: 0.18s ease;
 }
-.retry-btn:hover { background-color: var(--lm-primary-hover); transform: translateY(-1px); }
+
+.retry-btn:hover {
+  background: var(--lm-primary-hover);
+  transform: translateY(-2px);
+}
 
 /* ============================================================
-   PROFILE SUMMARY (COMPACT VIEW)
-   - USE FLEX: ICON + TEXT INLINE (BETTER FOR CONTAINERS)
+   PROFILE SUMMARY (COMPACT)
    ============================================================ */
 .profile-summary {
   display: flex;
   align-items: center;
   gap: 1rem;
+
   padding: 1rem;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
-  background: transparent; /* KEEP TRANSPARENT — NO WHITE RECTANGLE AROUND AVATAR */
-  box-shadow: none;
+  border-radius: 14px;
   text-align: left;
-}
-.profile-summary:hover {
-  box-shadow: 0 6px 18px rgba(99,102,241,0.08);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.651), rgba(255, 255, 255, 0.701));
+
+  transition: 0.18s ease;
+  cursor: pointer;
 }
 
-/* PROFILE TEXT */
-.profile-summary-text p { margin: 0; font-weight: 600; font-size: 1.05rem; color: var(--lm-text); }
-.profile-summary-text small { display: block; color: var(--lm-subtext); font-size: var(--lm-fs-sm); }
+.profile-summary:hover {
+  background: rgba(255,255,255,0.55);
+  box-shadow: var(--lm-shadow-1);
+}
+
+.profile-summary-text p {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.profile-summary-text small {
+  color: var(--lm-subtext);
+  font-size: var(--lm-fs-sm);
+}
 
 /* ============================================================
-   AVATAR STYLES — CONSISTENT WRAPPERS FOR SMALL/LARGE
-   - KEEP IMAGE ELEMENTS AS <img class="avatar"> OR <img class="avatar-lg">
-   - FALLBACK ELEMENTS USE .avatar-fallback / .avatar-fallback-lg
-   - USE CSS VARIABLES FOR SIZES
+   AVATARS — UNIFORM AND HIGH QUALITY
    ============================================================ */
-
-/* COMMON AVATAR RULES (REMOVE ANY PARENT BACKGROUNDS/OUTLINES) */
 .avatar,
-.avatar-fallback,
-.avatar-lg,
-.avatar-fallback-lg {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+.avatar-lg {
   border-radius: 50%;
-  object-fit: cover; /* ENSURE CROPPING FOR IMG */
-  background: transparent;  /* ENSURE NO WHITE RECTANGLE */
-  border: none;
-  box-shadow: none;
-  outline: none;
+  object-fit: cover;
+  display: inline-flex;
+  background: transparent;
 }
 
-/* SMALL AVATAR (SUMMARY) */
 .avatar {
   width: var(--lm-avatar-sm);
-  height: auto;
-  box-shadow: var(--lm-shadow-1);
-  border: 2px solid rgba(255,255,255,0.85);
-  transition: transform .22s ease, box-shadow .22s ease;
-}
-
-.avatar:hover,
-.avatar:focus,
-.avatar:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-  border: none !important;
-}
-
-button:has(.avatar) {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-/* SMALL FALLBACK (SUMMARY) */
-.avatar-fallback {
-  width: var(--lm-avatar-sm);
   height: var(--lm-avatar-sm);
-  background: linear-gradient(135deg, #c7d2fe, #818cf8);
-  color: var(--lm-white);
-  font-weight: 700;
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  border: 2px solid rgba(255,255,255,0.95);
+  border: 2px solid white;
   box-shadow: var(--lm-shadow-1);
 }
 
-/* LARGE AVATAR (PROFILE DETAILS) */
 .avatar-lg {
   width: var(--lm-avatar-lg);
   height: var(--lm-avatar-lg);
-  border: 3px solid var(--lm-white);
+  border: 3px solid white;
   box-shadow: var(--lm-shadow-2);
-  transition: transform .25s ease, box-shadow .25s ease;
 }
 
-/* LARGE FALLBACK */
+/* Fallback avatars */
+.avatar-fallback,
+.avatar-fallback-lg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #c7d2fe, #6366f1);
+  color: white;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 50%;
+}
+
+.avatar-fallback {
+  width: var(--lm-avatar-sm);
+  height: var(--lm-avatar-sm);
+  font-size: 1.1rem;
+}
+
 .avatar-fallback-lg {
   width: var(--lm-avatar-lg);
   height: var(--lm-avatar-lg);
-  background: linear-gradient(135deg, #a5b4fc, #6366f1);
-  color: var(--lm-white);
-  font-weight: 800;
-  font-size: 2.4rem;
-  text-transform: uppercase;
-  border: 3px solid var(--lm-white);
-  box-shadow: var(--lm-shadow-2);
+  font-size: 2.2rem;
 }
 
 /* ============================================================
-   PROFILE DETAILS (EXPANDED VIEW)
-   - USE FLEX COLUMN TO STACK AVATAR & FIELDS NATURALLY
+   PROFILE DETAILS
    ============================================================ */
 .profile-details {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
   align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
   padding: 1rem;
-  border-radius: 14px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(240, 240, 255, 0));
 }
 
-/* PROFILE FIELD ROWS (FULL WIDTH WITH SUBTLE CARD) */
 .profile-field {
   width: 90%;
-  background: var(--lm-white);
-  padding: 0.7rem 0.9rem;
+  background: white;
+  padding: 0.75rem;
   border-radius: 10px;
-  font-weight: 600;
-  color: var(--lm-text);
   box-shadow: var(--lm-shadow-1);
+  font-weight: 600;
   text-align: left;
 }
 
-/* LOGOUT AREA */
-.logout-confirm { margin-top: 1rem; width: 100%; display: flex; justify-content: center; }
-.logout-btn {
-  background-color: var(--lm-danger);
-  color: var(--lm-white);
-  padding: 0.6rem 1.5rem;
-  border-radius: 10px;
-  border: none;
-  font-weight: 800;
-  cursor: pointer;
-  transition: transform .12s ease, background .18s ease;
-}
-.logout-btn:hover { transform: translateY(-1px); background: var(--lm-danger-hover); }
-
 /* ============================================================
-   LOGOUT CONFIRMATION (SEPARATE CARD)
-   - GRID IS USED FOR BUTTON ROW TO ALIGN HORIZONTALLY
+   LOGOUT BUTTONS
    ============================================================ */
 .logout-confirmation {
-  background: var(--lm-white);
   padding: 1.5rem;
+  background: white;
   border-radius: 14px;
   box-shadow: var(--lm-shadow-2);
-  text-align: center;
-  animation: fadeIn .35s ease;
-}
-.logout-confirmation h3 {
-  font-size: var(--lm-fs-lg);
-  font-weight: 700;
-  color: var(--lm-text);
-  margin-bottom: 0.75rem;
 }
 
 .confirmation-actions {
+  margin-top: 1rem;
   display: grid;
   grid-auto-flow: column;
-  gap: 0.75rem;
-  justify-content: center;
-  margin-top: 1rem;
+  gap: 0.8rem;
 }
-.btn-yes, .btn-no {
+
+.logout-btn,
+.btn-yes,
+.btn-no {
   padding: 0.6rem 1.4rem;
   border-radius: 10px;
   border: none;
   font-weight: 800;
   cursor: pointer;
 }
-.btn-yes { background: var(--lm-danger); color: var(--lm-white); }
-.btn-no  { background: #e0e0e0; color: #111111; }
-.btn-yes:hover, .btn-no:hover { filter: brightness(0.95); transform: translateY(-1px); }
 
+.logout-btn,
+.btn-yes { background: var(--lm-danger); color: white; }
+.btn-no  { background: #e5e5e5; color: black; }
+
+.logout-btn:hover,
+.btn-yes:hover { background: var(--lm-danger-hover); }
 
 /* ============================================================
-   RESPONSIVE RULES — WHEN TO USE FLEX VS GRID
-   - DEFAULT: FLEX (STACKING CONTENT VERTICALLY)
-   - USE GRID ONLY FOR HORIZONTAL ITEMS (CONFIRMATION BUTTONS)
-   - TWEAK AVATAR SIZES ON SMALL SCREENS
+   RESPONSIVE DESIGN — MOBILE-FIRST
    ============================================================ */
-
-/* SMALL / FOLDABLE DEVICES */
 @media (max-width: 480px) {
-  .modal-container { padding: 1.25rem; max-width: 380px; }
-  .avatar { width: 56px; height: 56px; }
-  .avatar-fallback { width: 56px; height: 56px; font-size: 1.05rem; }
-  .avatar-lg, .avatar-fallback-lg { width: 96px; height: 96px; font-size: 2rem; }
-  .profile-summary { gap: .6rem; padding: .8rem; }
-}
+  .modal-container {
+    max-width: 380px;
+    padding: 1.4rem;
+  }
 
-/* TABLETS */
-@media (min-width: 481px) and (max-width: 900px) {
-  .modal-container { max-width: 460px; padding: 1.6rem; }
-  .avatar { width: var(--lm-avatar-md); height: var(--lm-avatar-md); }
-  .avatar-lg, .avatar-fallback-lg { width: 110px; height: 110px; }
-}
+  .avatar { width: 54px; height: 54px; }
 
-/* DESKTOPS */
-@media (min-width: 901px) {
-  .modal-container { max-width: 520px; }
-  .avatar { width: var(--lm-avatar-md); height: var(--lm-avatar-md); }
-  .avatar-lg { width: var(--lm-avatar-lg); height: var(--lm-avatar-lg); }
-}
-
-/* ULTRA WIDE / TV */
-@media (min-width: 1600px) {
-  .modal-container { max-width: 640px; padding: 2.5rem; }
-  .avatar-lg { width: 140px; height: 140px; }
-  .avatar, .avatar-fallback { width: 80px; height: 80px; }
-}
-
-/* ============================================================
-   ACCESSIBILITY: REDUCED MOTION
-   ============================================================ */
-@media (prefers-reduced-motion: reduce) {
-  .modal-container, .oauth-btn, .logout-btn, .btn-yes, .btn-no, .retry-btn {
-    transition: none !important;
-    animation: none !important;
+  .avatar-lg,
+  .avatar-fallback-lg {
+    width: 94px;
+    height: 94px;
+    font-size: 1.9rem;
   }
 }
 
 /* ============================================================
-   SMALL UTILITIES (SCOPE-LIMITED)
+   REDUCED MOTION
    ============================================================ */
-.hidden { display: none !important; }
-.full-width { width: 100%; }
+@media (prefers-reduced-motion: reduce) {
+  *,
+  .modal-container,
+  .oauth-btn,
+  .logout-btn {
+    animation: none !important;
+    transition: none !important;
+  }
+}
 
 /* ============================================================
    ANIMATIONS
    ============================================================ */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px) scale(0.995); }
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }

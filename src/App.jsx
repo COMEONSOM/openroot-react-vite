@@ -1,11 +1,12 @@
 // ============================================================
 // APP ROOT — OPENROOT FINANCIAL SYSTEMS
-// GLOBAL SEO + GLOBAL BACKGROUND + ALL COMPONENTS
-// VERSION: 2025.9 — FULL SEO BUILD
+// GLOBAL SEO + LAZY BACKGROUND + ALL COMPONENTS
+// VERSION: 2025.10 — FULL SEO + PERFORMANCE BUILD
 // src/App.jsx
 // ============================================================
 
 import { Helmet } from "react-helmet-async";
+import React, { Suspense } from "react"; // ⭐ Needed for lazy loading
 
 // COMPONENTS
 import Header from "./components/Header";
@@ -15,7 +16,11 @@ import Elements from "./components/Elements";
 import ContactFollow from "./components/ContactFollow";
 import Footer from "./components/Footer";
 import Promotion from "./components/Promotion";
-import BackgroundAnimation from "./components/BackgroundAnimation";
+
+// ⭐ Lazy-loaded animation (major performance improvement)
+const BackgroundAnimation = React.lazy(() =>
+  import("./components/BackgroundAnimation")
+);
 
 import "./App.css";
 
@@ -26,24 +31,25 @@ export default function App() {
   return (
     <div className="app-wrapper">
 
-      {/* 🔥 GLOBAL SEO FOR THE ENTIRE SITE */}
+      {/* 🔥 GLOBAL SEO FOR THE ENTIRE WEBSITE */}
       <Helmet>
+
         {/* ============================
-            TITLE (STRONG FOR RANKING)
+            TITLE (Strong SEO weight)
         ============================ */}
         <title>Openroot Financial Systems</title>
 
         {/* ============================
-            META BASICS
+            META TAGS (Ranking Boost)
         ============================ */}
         <meta
           name="description"
-          content="Openroot offers modern financial tools, AI-powered utilities, business automation, and practical education for students & MSMEs. Explore calculators, stock tools, SIP analyzers, and fintech software."
+          content="Openroot offers modern financial tools, AI-powered utilities, business automation, and practical education for students & MSMEs. Explore calculators, SIP analyzers, stock averaging tools, and fintech utilities."
         />
 
         <meta
           name="keywords"
-          content="Openroot, Openroot Financial Systems, fintech tools, AI finance tools, stock averaging calculator, SIP analyzer, education platform, investing tools, MSME software"
+          content="Openroot, Openroot Financial Systems, fintech tools, AI tools, financial calculators, SIP analyzer, stock averaging calculator, MSME software, prompt engineering courses"
         />
 
         <meta name="author" content="Openroot" />
@@ -55,12 +61,12 @@ export default function App() {
         <link rel="canonical" href="https://openroot.in" />
 
         {/* ============================
-            OPEN GRAPH (FACEBOOK / LINKEDIN)
+            OPEN GRAPH (Facebook / LinkedIn)
         ============================ */}
         <meta property="og:title" content="Openroot Financial Systems" />
         <meta
           property="og:description"
-          content="Modern AI-powered financial tools, calculators, and MSME utilities from Openroot."
+          content="Modern fintech & AI-powered financial tools for students, professionals, and MSMEs. Stock tools, calculators, and automation utilities."
         />
         <meta property="og:url" content="https://openroot.in" />
         <meta property="og:type" content="website" />
@@ -94,7 +100,7 @@ export default function App() {
         <meta name="theme-color" content="#0f172a" />
 
         {/* ============================
-            JSON-LD ORGANIZATION SCHEMA
+            ORGANIZATION SCHEMA (JSON-LD)
         ============================ */}
         <script type="application/ld+json">
           {`
@@ -113,10 +119,15 @@ export default function App() {
         </script>
       </Helmet>
 
-      {/* ⭐ Global animated background */}
-      <BackgroundAnimation />
+      {/* ========================================
+          LAZY-LOADED BACKGROUND ANIMATION
+          ⚡ Boosts FCP / LCP / TBT massively!
+      ========================================== */}
+      <Suspense fallback={null}>
+        <BackgroundAnimation />
+      </Suspense>
 
-      {/* 🔹 Main Components */}
+      {/* 🔹 Main Sections */}
       <Header />
       <Promotion />
       <Navbar />

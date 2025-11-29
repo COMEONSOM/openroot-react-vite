@@ -1,56 +1,44 @@
 /**
  * ============================================================
- * HEADER COMPONENT — OPENROOT
- * MODERNIZED VERSION (ES2023+, OPTIMIZED, PRODUCTION-READY)
- * VERSION: 2025.7
- * src/components/Header.jsx
- * ============================================================
- * FEATURES:
- * FIREBASE AUTH — ROBUST SESSION SYNC
- * ERROR HANDLING — EDGE-CASE SAFE
- * TIME COMPLEXITY — O(1) OPERATIONS
- * PERFORMANCE — MINIMAL RE-RENDERS
+ * HEADER COMPONENT — OPENROOT (2025.10)
+ * SEO + PERFORMANCE OPTIMIZED + PROFESSIONAL STRUCTURE
  * ============================================================
  */
 
-import { useState, useEffect, useCallback, memo } from "react";
-import Lottie from "lottie-react";
+import { useState, useEffect, useCallback, memo, lazy, Suspense } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 
 import { auth } from "../lib/firebase";
 import LoginModal from "./LoginModal";
-import loginAnimation from "../animations/login.json";
 import "./styles/Header.css";
+
+// ⭐ Lazy-load Lottie (massive performance boost)
+const Lottie = lazy(() => import("lottie-react"));
+import loginAnimation from "../animations/login.json";
 
 /**
  * ============================================================
- * UTILITY FUNCTION: SAFE SET USER
- * ENSURES COMPONENT DOESN’T SET STATE ON UNMOUNT
+ * SAFE AUTH LISTENER — prevents memory leaks
  * ============================================================
  */
 const useSafeAuthListener = (setUser) => {
   useEffect(() => {
-    let isMounted = true;
+    let mounted = true;
 
-    // LISTEN TO FIREBASE AUTH CHANGES
-    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
-      if (isMounted) {
-        setUser(firebaseUser ?? null); // ✅ NULL COALESCING
-      }
+    const unsub = onAuthStateChanged(auth, (firebaseUser) => {
+      if (mounted) setUser(firebaseUser ?? null);
     });
 
-    // CLEANUP TO AVOID MEMORY LEAKS
     return () => {
-      isMounted = false;
-      unsubscribe();
+      mounted = false;
+      unsub();
     };
   }, [setUser]);
 };
 
 /**
  * ============================================================
- * UTILITY FUNCTION: FALLBACK AVATAR CHARACTER
- * GETS FIRST CHARACTER FROM DISPLAY NAME OR DEFAULT 'U'
+ * GET INITIAL LETTER (fallback avatar)
  * ============================================================
  */
 const getUserInitial = (user) =>
@@ -58,131 +46,99 @@ const getUserInitial = (user) =>
 
 /**
  * ============================================================
- * COMPONENT: USER AVATAR
- * SHOWS IMAGE IF AVAILABLE, OTHERWISE FALLBACK CHARACTER
+ * USER AVATAR COMPONENT
  * ============================================================
  */
 const UserAvatar = memo(({ user }) => {
   if (!user) return null;
 
-  // RENDER AVATAR IMAGE IF AVAILABLE
   if (user.photoURL) {
     return (
       <img
         src={user.photoURL}
         alt="User avatar"
         className="avatar"
-        onError={(e) => {
-          // ✅ HANDLE IMAGE LOAD FAILURE
-          e.currentTarget.style.display = "none";
-        }}
-        loading="lazy" // ✅ PERFORMANCE OPTIMIZATION
         draggable="false"
+        loading="lazy"
+        onError={(e) => (e.currentTarget.style.display = "none")}
       />
     );
   }
 
-  // OTHERWISE SHOW FALLBACK CHARACTER
   return <div className="avatar-fallback">{getUserInitial(user)}</div>;
 });
 
 /**
  * ============================================================
- * COMPONENT: HEADER
- * MAIN ENTRY — HANDLES LOGIN STATE, UI, AND USER SESSION
+ * HEADER COMPONENT
  * ============================================================
  */
 const Header = () => {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [user, setUser] = useState(null);
 
-  // ✅ HOOK TO KEEP FIREBASE SESSION SYNCED
   useSafeAuthListener(setUser);
 
-  /**
-   * ============================================================
-   * HANDLER: LOGIN SUCCESS CALLBACK
-   * SETS USER AFTER MODAL LOGIN COMPLETION
-   * ============================================================
-   */
   const handleLoginSuccess = useCallback((firebaseUser) => {
-    try {
-      if (!firebaseUser) throw new Error("Invalid user data.");
-      setUser(firebaseUser);
-    } catch (err) {
-      console.error("LOGIN ERROR:", err);
-    }
+    if (firebaseUser) setUser(firebaseUser);
   }, []);
 
-  /**
-   * ============================================================
-   * HANDLER: PROFILE CLICK
-   * OPEN PROFILE SECTION (LOCAL SESSION FLAG)
-   * ============================================================
-   */
-  const handleProfileClick = useCallback(() => {
-    try {
-      sessionStorage.setItem("openrootOpenProfileDetails", "1"); // 🔥 UPDATED KEY
-      setIsLoginOpen(true);
-    } catch (err) {
-      console.error("PROFILE SESSION ERROR:", err);
-    }
-  }, []);
-
-  /**
-   * ============================================================
-   * HANDLER: LOGIN BUTTON CLICK
-   * OPEN LOGIN MODAL SAFELY
-   * ============================================================
-   */
-  const handleLoginClick = useCallback(() => {
+  const openProfile = useCallback(() => {
+    sessionStorage.setItem("openrootOpenProfileDetails", "1");
     setIsLoginOpen(true);
   }, []);
+
+  const openLogin = useCallback(() => setIsLoginOpen(true), []);
 
   return (
     <header className="header" role="banner">
       {/* ============================================================
-           LEFT SIDE: COMPANY LOGO
-           ============================================================ */}
-      <div className="logo">
+          LEFT — LOGO WITH SEO-BOOSTING LINK
+      ============================================================ */}
+      <a href="/" className="logo" aria-label="Openroot Homepage">
         <img
           src="/assets/openroot-white-nobg.png"
           alt="Openroot Logo"
           className="logo-img"
           draggable="false"
-          loading="eager" // ✅ PRIORITY LOAD
+          loading="eager"
         />
-      </div>
+      </a>
 
       {/* ============================================================
-           RIGHT SIDE: AUTH / PROFILE AREA
-           ============================================================ */}
-      <div className="auth-area relative">
+          RIGHT — NAVIGATION ACTIONS (SEO BENEFIT)
+      ============================================================ */}
+      <nav className="auth-area" aria-label="User navigation">
         {!user ? (
           <button
             className="login-animation"
-            onClick={handleLoginClick}
-            aria-label="Open login"
+            onClick={openLogin}
+            aria-label="Open login modal"
           >
-            <Lottie
-              animationData={loginAnimation}
-              loop
-              autoplay
-              className="login-lottie"
-            />
+            <Suspense fallback={<span className="login-hint">Login</span>}>
+              <Lottie
+                animationData={loginAnimation}
+                loop
+                autoplay
+                className="login-lottie"
+              />
+            </Suspense>
             <span className="login-hint">LOGIN HERE →</span>
           </button>
         ) : (
           <button
             className="profile-button"
-            onClick={handleProfileClick}
-            aria-label="Open profile"
+            onClick={openProfile}
+            aria-label="Open profile menu"
           >
             <UserAvatar user={user} />
           </button>
         )}
-      </div>
+      </nav>
 
+      {/* ============================================================
+          LOGIN MODAL
+      ============================================================ */}
       {isLoginOpen && (
         <LoginModal
           onClose={() => setIsLoginOpen(false)}

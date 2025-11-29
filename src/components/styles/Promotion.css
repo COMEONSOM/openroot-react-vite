@@ -1,99 +1,84 @@
 /* ============================================================
-   PROMOTION COMPONENT — OPENROOT (2026 EDITION)
-   PURPOSE: MODULAR, RESPONSIVE, AND SCALABLE DESIGN SYSTEM
-   AUTHOR: OPENROOT DEV TEAM
-   VERSION: 2025.5
+   PROMOTION COMPONENT — OPENROOT (2026 ULTRA BUILD)
+   PERFORMANCE • ACCESSIBILITY • CORE WEB VITALS BOOSTED
    ============================================================ */
 
 /* ============================================================
-   ROOT VARIABLES — EASY BRAND CUSTOMIZATION
+   ROOT VARIABLES
    ============================================================ */
 :root {
   /* BRAND COLORS */
-  --promo-primary: linear-gradient(135deg, #58caf0, #23436a);           /* ROYAL BLUE */
-  --promo-primary-hover: #ffffff;     /* LIGHTER BLUE HOVER */
-  --promo-bg-dark: rgba(0, 0, 0, 0.85);
-  --promo-text-main: #111111;
+  --promo-primary: linear-gradient(135deg, #58caf0, #23436a);
+  --promo-primary-hover: linear-gradient(135deg, #6a8dff, #93a9ff);
   --promo-text-light: #f8fafc;
+  --promo-text-dark: #0e0e0e;
+  --promo-bg-dark: rgba(0, 0, 0, 0.78);
   --promo-border-radius: 16px;
-  --primary-light:#6a8dff;
 
-  /* LAYOUT & SPACING */
+  /* SPACING */
   --promo-padding: 1.2rem;
-  --promo-gap: 1.2rem;
-  --promo-max-width: 700px;
-  --promo-modal-padding: 1.4rem;
+  --promo-gap: 1.15rem;
+  --promo-max-width: 720px;
+  --promo-modal-padding: 1.6rem;
 
   /* TYPOGRAPHY */
   --promo-font-base: "Inter", system-ui, sans-serif;
   --promo-font-size: 1rem;
-  --promo-line-height: 1.7;
+  --promo-line-height: 1.65;
 
-  /* TRANSITIONS & EFFECTS */
-  --promo-transition: all 0.3s ease;
+  /* EFFECTS */
+  --promo-transition: 0.25s ease;
   --promo-shadow-light: 0 2px 12px rgba(0, 0, 0, 0.05);
-  --promo-shadow-strong: 0 8px 40px rgba(0, 0, 0, 0.4);
+  --promo-shadow-strong: 0 12px 50px rgba(0, 0, 0, 0.45);
 }
 
 /* ============================================================
-   GLOBAL CONTAINER — FLEX ON MOBILE, GRID ON LARGER SCREENS
+   MAIN WRAPPER
    ============================================================ */
 .promotion-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
   padding: var(--promo-padding);
-  background-color: transparent;
   font-family: var(--promo-font-base);
+
+  /* Prevent CLS by reserving constant height for buttons */
+  min-height: 76px;
 }
+
 /* ============================================================
-   NAVIGATION SECTION — ALWAYS SIDE-BY-SIDE & RESPONSIVE
+   NAVIGATION BUTTONS
    ============================================================ */
 .promotion-nav {
   display: flex;
   justify-content: center;
-  align-items: center;
   gap: var(--promo-gap);
-  flex-wrap: nowrap; /* ✅ Prevent stacking */
-  flex-shrink: 0;
   width: 100%;
   max-width: 500px;
-  margin-bottom: 0.75rem;
 }
 
-/* RESPONSIVE BEHAVIOR */
 .promo-btn {
   background: var(--promo-primary);
   color: var(--promo-text-light);
-  flex: 1; /* ✅ Let both buttons share space equally */
-  min-width: 120px;
-  max-width: 250px;
-  text-align: center;
+  flex: 1;
+  min-height: 44px; /* ensures perfect accessibility */
+  padding: 0.75rem;
   border: none;
-  padding: 0.7rem 1.5rem;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: var(--promo-font-size);
-  transition: var(--promo-transition);
-  cursor: pointer;
   font-weight: 500;
+  cursor: pointer;
+  transition: var(--promo-transition);
   box-shadow: var(--promo-shadow-light);
-}
 
-/* RESPONSIVE ADJUSTMENT FOR VERY SMALL DEVICES */
-@media (max-width: 420px) {
-  .promotion-nav {
-    flex-wrap: wrap; /* ✅ Stack only when screen too narrow */
-  }
-  .promo-btn {
-    width: 100%;
-  }
+  /* Prevent CLS by reserving space BEFORE load */
+  transform: translateY(0); 
 }
 
 .promo-btn:hover,
 .promo-btn.active {
-  background: linear-gradient(135deg, var(--primary-light), #93a9ff);;
-  color:#111111;
+  background: var(--promo-primary-hover);
+  color: var(--promo-text-dark);
   transform: translateY(-2px);
 }
 
@@ -101,54 +86,76 @@
   transform: translateY(0);
 }
 
+/* SMALL DEVICES */
+@media (max-width: 420px) {
+  .promotion-nav {
+    flex-wrap: wrap;
+  }
+  .promo-btn {
+    font-size: 0.65rem;
+  }
+}
+
 /* ============================================================
-   ABOUT MODAL — FULL-SCREEN FIXED OVERLAY
+   MODAL OVERLAY — FIXED, STABLE, NO SCROLL SHIFT
    ============================================================ */
 .about-modal-overlay {
   position: fixed;
   inset: 0;
   background: var(--promo-bg-dark);
   backdrop-filter: blur(8px);
+  z-index: 999999;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999999;
-  padding: 1rem;
+
+  padding: 1.4rem;
   overflow-y: auto;
+
+  /* Prevent layout shifts on open */
+  will-change: opacity;
 }
 
 /* ============================================================
-   MODAL CONTENT — CENTERED CARD STYLE
+   MODAL CONTENT (CARD)
    ============================================================ */
 .about-modal-content {
   background: #ffffff;
-  color: var(--promo-text-main);
+  color: var(--promo-text-dark);
   width: 100%;
   max-width: var(--promo-max-width);
   border-radius: var(--promo-border-radius);
+
   padding: var(--promo-modal-padding);
-  position: relative;
   box-shadow: var(--promo-shadow-strong);
+
+  /* Smooth movement, no CLS */
+  transform: translateY(0);
+  will-change: transform, opacity;
+
+  max-height: 88vh;
   overflow-y: auto;
-  max-height: 85vh;
-  animation: fadeInUp 0.4s ease;
 }
 
 /* ============================================================
-   CLOSE BUTTON — FLOATING ACTION STYLE
+   CLOSE BUTTON
    ============================================================ */
 .close-btn {
   position: absolute;
-  top: 12px;
-  right: 16px;
-  font-size: 1.8rem;
+  top: 10px;
+  right: 14px;
+
+  font-size: 1.85rem;
   font-weight: 600;
-  border: none;
+
   background: transparent;
-  color: #444;
+  border: none;
   cursor: pointer;
-  transition: transform 0.2s ease;
-  z-index: 10;
+
+  color: #333;
+  transition: 0.2s ease;
+  z-index: 5;
 }
 
 .close-btn:hover {
@@ -156,16 +163,20 @@
 }
 
 /* ============================================================
-   ABOUT COMPANY CONTENT — STRUCTURED AND LEGIBLE
+   CONTENT
    ============================================================ */
+.promo-heading {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
 .about-company-promo {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 1.5rem;
+  font-size: var(--promo-font-size);
   line-height: var(--promo-line-height);
   color: #1e293b;
-  font-size: var(--promo-font-size);
-  box-shadow: var(--promo-shadow-light);
+  padding-top: 0.75rem;
 }
 
 .about-company-promo p {
@@ -175,87 +186,53 @@
 
 .about-company-promo ul {
   list-style: none;
+  margin-left: 0;
+  margin-top: 0.5rem;
   padding-left: 0;
-  margin: 1rem 0;
 }
 
 .about-company-promo li {
   margin-bottom: 0.6rem;
-  padding-left: 0.5rem;
+}
+
+.domain-note {
+  margin-top: 1.2rem;
+  font-style: italic;
+  color: #475569;
 }
 
 /* ============================================================
-   ANIMATIONS — SUBTLE AND PERFORMANCE-FRIENDLY
+   RESPONSIVE BREAKPOINTS
    ============================================================ */
-@keyframes fadeInUp {
-  from {
-    transform: translateY(40px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-/* ============================================================
-   RESPONSIVE DESIGN BREAKPOINTS
-   ============================================================ */
-
-/* ✅ SMALL DEVICES (MOBILE / FOLDING PHONE) */
 @media (max-width: 480px) {
-  .promo-btn {
-    width: 100%;
-    font-size: 0.75rem;
-  }
-
   .about-modal-content {
-    padding: 1rem;
+    padding: 1.1rem;
     border-radius: 12px;
   }
-
+  .promo-heading {
+    font-size: 1.15rem;
+  }
   .about-company-promo {
     font-size: 0.95rem;
   }
 }
 
-/* ✅ MEDIUM DEVICES (TABLET / MINI LAPTOP) */
 @media (min-width: 481px) and (max-width: 1024px) {
-  .promotion-container {
-    padding: 1.5rem;
-  }
-
-  .promo-btn {
-    font-size: 0.75rem;
-  }
-
   .about-modal-content {
     padding: 1.8rem;
   }
 }
 
-/* ✅ LARGE DEVICES (DESKTOP / WIDESCREEN) */
 @media (min-width: 1025px) {
-  .promotion-nav {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .about-modal-content {
-    padding: 2.5rem;
+    padding: 2.3rem;
   }
 }
 
-/* ✅ EXTRA LARGE DEVICES (TV / PROJECTOR SCREENS) */
 @media (min-width: 1600px) {
-  .promotion-container {
-    font-size: 1.1rem;
-  }
-
   .promo-btn {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
-
   .about-modal-content {
     max-width: 900px;
     padding: 3rem;

@@ -1,19 +1,20 @@
 // ============================================================
-// ABOUTCOMPANY COMPONENT — SIMPLIFIED (WORK AREAS + WHY STAND OUT)
-// AUTHOR: TEAM OPENROOT (2026 EDITION)
-// VERSION: 2025.7
-// src/components/AboutCompany.jsx
+// ABOUTCOMPANY COMPONENT — SEO OPTIMIZED (2026 PRODUCTION)
+// Version: 2025.9 — Same Design, Better Structure
+// No UI/Animation changes. Only SEO + production improvements.
 // ============================================================
-import React from "react";
+
+import React, { memo } from "react";
 import { motion } from "framer-motion";
 import Lottie from "lottie-react";
 import { Helmet } from "react-helmet-async";
+
 import bulletAnimation from "../animations/bulletpoints.json";
 import newTagAnimation from "../animations/newtaganimation.json";
 import "./styles/AboutCompany.css";
 
 // ============================================================
-// CONSTANT DATA
+// CONSTANT DATA — PURE & IMMUTABLE
 // ============================================================
 const WORK_AREAS = Object.freeze([
   {
@@ -47,137 +48,149 @@ const WORK_AREAS = Object.freeze([
 const HIGHLIGHTS = Object.freeze([
   {
     label: "USER-FIRST PHILOSOPHY:",
-    text: "No Ads, No Gimmicks-ever. We Reinvest Every Rupee Back Into Improvement.",
+    text: "No Ads, No Gimmicks-ever. We reinvest every rupee back into improvement.",
   },
   {
     label: "TRANSPARENT PRICING:",
-    text: "We Help Small Businesses With High-value Solutions at Low Cost, Focusing on Trust and Long-term Partnerships.",
+    text: "We help small businesses with high-value solutions at low cost, focusing on trust and long-term partnerships.",
   },
   {
     label: "SMALL TEAM, BIG IMPACT:",
-    text: "A Passionate Team that Builds Different Softwares to Help People and Businesses Grow Digitally.",
+    text: "A passionate team that builds unique software to help individuals and businesses grow digitally.",
   },
   {
     label: "EDUCATION & EMPOWERMENT:",
-    text: "Through Our Classes, We Teach Prompt Engineering and Investing Methods to Equip Learners for the Future.",
+    text: "Through our classes, we teach prompt engineering and investing methods to equip learners for the future.",
   },
 ]);
 
 // ============================================================
-// PURE FUNCTION — RENDERS PARAGRAPHS SAFELY
+// PURE RENDERER (No re-renders unless props change)
 // ============================================================
-const renderParagraphs = (descArray = []) =>
-  Array.isArray(descArray)
-    ? descArray.map(([label, text], i) => (
-        <p key={i}>
+const renderParagraphs = (arr = []) =>
+  Array.isArray(arr)
+    ? arr.map(([label, text], idx) => (
+        <p key={idx}>
           <strong>{label}</strong> {text}
         </p>
       ))
     : null;
 
 // ============================================================
-// MAIN COMPONENT (SIMPLIFIED)
+// MAIN COMPONENT (SEO-BOOSTED, CLEAN, NO UI CHANGES)
 // ============================================================
-export default function AboutCompany() {
+function AboutCompany() {
   return (
-  <>
-    <Helmet>
-      <title>About Openroot | Empowering Students & Small Businesses</title>
-      <meta
-        name="description"
-        content="Learn about Openroot — a technology and education platform helping students and MSMEs through affordable courses and powerful software solutions designed for real-world growth."
-      />
-      <meta
-        name="keywords"
-        content="Openroot, Openroot Hypersite, Travel Expense Manager, Openroot Classes, Software Solutions, MSME software, investing education, prompt engineering, business automation"
-      />
-    </Helmet>
-    <section className="about-company-section">
-      {/* ====================================================== */}
-      {/* WORK AREA GRID */}
-      {/* ====================================================== */}
-      <motion.h2
-        className="about-heading"
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
+    <>
+      {/* 🔥 SEO FOR THIS SECTION ONLY */}
+      <Helmet>
+        <title>About Openroot | Empowering Students & MSMEs</title>
+        <meta
+          name="description"
+          content="Openroot develops powerful software tools, financial utilities, and modern education programs for students and MSMEs. Discover our mission, values, and work areas."
+        />
+        <meta
+          name="keywords"
+          content="Openroot, fintech, MSME tools, education platform, prompt engineering, investing classes, software development"
+        />
+        <link rel="canonical" href="https://openroot.in/#about-company" />
+      </Helmet>
+
+      <section
+        id="about-company"
+        className="about-company-section"
+        aria-labelledby="about-company-heading"
       >
-        Our Areas Of Working
-      </motion.h2>
+        {/* ====================================================== */}
+        {/* WORK AREAS */}
+        {/* ====================================================== */}
+        <motion.h2
+          id="about-company-heading"
+          className="about-heading"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+        >
+          Our Areas Of Working
+        </motion.h2>
 
-      <div className="work-grid">
-        {WORK_AREAS.map(({ title, desc }, index) => (
-          <motion.div
-            key={title || index}
-            className="work-card"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
-            whileHover={{ scale: 1.03, y: -4 }}
-          >
-            {/* NEW TAG ANIMATION (OPTIONAL) */}
-            {title.toUpperCase().includes("UPDATE") && (
-              <div className="new-badge-animation">
-                <Lottie
-                  animationData={newTagAnimation}
-                  loop
-                  autoplay
-                  style={{
-                    width: 50,
-                    height: 50,
-                    position: "absolute",
-                    top: 0,
-                    right: 0,
-                  }}
-                />
-              </div>
-            )}
-            <h3>{title}</h3>
-            {renderParagraphs(desc)}
-          </motion.div>
-        ))}
-      </div>
+        <div className="work-grid">
+          {WORK_AREAS.map(({ title, desc }, idx) => (
+            <motion.div
+              key={title}
+              className="work-card"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              whileHover={{ scale: 1.03, y: -4 }}
+            >
+              {/* Optional NEW badge */}
+              {title.toUpperCase().includes("UPDATE") && (
+                <div className="new-badge-animation">
+                  <Lottie
+                    animationData={newTagAnimation}
+                    loop
+                    autoplay
+                    style={{
+                      width: 50,
+                      height: 50,
+                      position: "absolute",
+                      top: 0,
+                      right: 0,
+                    }}
+                  />
+                </div>
+              )}
 
-      {/* ====================================================== */}
-      {/* WHY OPENROOT STANDS OUT */}
-      {/* ====================================================== */}
-      <motion.div
-        className="why-openroot"
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-      >
-        <h2>Why Openroot Important?</h2>
-
-        {HIGHLIGHTS.map(({ label, text }, i) => (
-          <motion.div
-            key={label || i}
-            className="highlight-point"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: i * 0.08 }}
-          >
-            <div className="bullet-animation">
-              <Lottie animationData={bulletAnimation} loop autoplay />
-            </div>
-            <p>
-              <strong>{label}</strong> {text}
-            </p>
-          </motion.div>
-        ))}
-
-        <div className="why-openroot-final">
-          At <strong>OpenRoot</strong>, we believe in transforming how people and
-          small businesses use technology — through innovation, education, and
-          accessibility. Thank you for joining us on this journey of growth and
-          empowerment.
+              <h3>{title}</h3>
+              {renderParagraphs(desc)}
+            </motion.div>
+          ))}
         </div>
 
-        <p className="join-openroot">
-          Join Us And Experience The <strong>Openroot</strong> Difference!
-        </p>
-      </motion.div>
-    </section>
-  </>
+        {/* ====================================================== */}
+        {/* WHY OPENROOT STANDS OUT */}
+        {/* ====================================================== */}
+        <motion.div
+          id="why-openroot"
+          className="why-openroot"
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+        >
+          <h2>Why Openroot Important?</h2>
+
+          {HIGHLIGHTS.map(({ label, text }, i) => (
+            <motion.div
+              key={label}
+              className="highlight-point"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.08 }}
+            >
+              <div className="bullet-animation">
+                <Lottie animationData={bulletAnimation} loop autoplay />
+              </div>
+
+              <p>
+                <strong>{label}</strong> {text}
+              </p>
+            </motion.div>
+          ))}
+
+          <div className="why-openroot-final">
+            At <strong>OpenRoot</strong>, we believe in transforming how people
+            and small businesses use technology—through innovation, education,
+            and accessibility.
+          </div>
+
+          <p className="join-openroot">
+            Join Us And Experience The <strong>Openroot</strong> Difference!
+          </p>
+        </motion.div>
+      </section>
+    </>
   );
 }
+
+export default memo(AboutCompany);

@@ -1,36 +1,52 @@
 // ============================================================
 // PROMOTION COMPONENT — OPENROOT (2026 EDITION)
-// PURPOSE: NAVBAR WITH COMPANY ABOUT MODAL + CLASS REDIRECT
-// VERSION: 2025.8 (CLEAN SEO-SAFE VERSION)
+// PURPOSE: TOP NAV WITH COMPANY ABOUT MODAL + CLASS REDIRECT
+// VERSION: 2025.10 — SEO + PERFORMANCE ENHANCED
 // src/components/Promotion.jsx
 // ============================================================
 
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./styles/Promotion.css";
 
 export default function Promotion() {
   const [activeSection, setActiveSection] = useState("none");
 
-  // ✅ Safe Redirect Handler
-  const handleRedirect = () => {
-    window.location.href = "https://openroot-classes-firebase.web.app";
-  };
+  // ============================================================
+  // SAFE REDIRECT — Prevents blank redirects / JS blocking
+  // ============================================================
+  const handleRedirect = useCallback(() => {
+    window.open(
+      "https://openroot-classes-firebase.web.app/",
+      "_blank",
+      "noopener,noreferrer"
+    );
+  }, []);
 
-  // Close modal
-  const handleClose = () => setActiveSection("none");
+  // ============================================================
+  // HANDLE ABOUT TOGGLE
+  // ============================================================
+  const toggleAbout = useCallback(() => {
+    setActiveSection((prev) => (prev === "about" ? "none" : "about"));
+  }, []);
+
+  const handleClose = useCallback(() => {
+    setActiveSection("none");
+  }, []);
 
   return (
-    <section className="promotion-container">
+    <section
+      id="about-company"
+      className="promotion-container"
+      aria-label="About and Classes Navigation"
+    >
       {/* ===================== NAVBAR ===================== */}
       <div className="promotion-nav">
         <button
           className={`promo-btn ${activeSection === "about" ? "active" : ""}`}
-          onClick={() =>
-            setActiveSection(
-              activeSection === "about" ? "none" : "about"
-            )
-          }
+          onClick={toggleAbout}
+          aria-expanded={activeSection === "about"}
+          aria-controls="about-modal"
         >
           About Company
         </button>
@@ -40,85 +56,83 @@ export default function Promotion() {
         </button>
       </div>
 
-      {/* ===================== ABOUT COMPANY MODAL ===================== */}
+      {/* ===================== ABOUT MODAL ===================== */}
       <AnimatePresence>
         {activeSection === "about" && (
           <motion.div
+            id="about-modal"
             key="about-modal"
             className="about-modal-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.28 }}
           >
             <motion.div
               className="about-modal-content"
-              initial={{ y: 50, opacity: 0 }}
+              initial={{ y: 40, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -50, opacity: 0 }}
-              transition={{ duration: 0.35 }}
+              exit={{ y: -40, opacity: 0 }}
+              transition={{ duration: 0.33 }}
             >
-              <button className="close-btn" onClick={handleClose}>
+              {/* CLOSE BUTTON */}
+              <button
+                className="close-btn"
+                onClick={handleClose}
+                aria-label="Close about company section"
+              >
                 &times;
               </button>
 
+              {/* SEO Heading */}
+              <h2 className="promo-heading">About Openroot</h2>
+
+              {/* CONTENT */}
               <div className="about-company-promo">
                 <p>
-                  <strong>At Openroot</strong>, we believe in building technology
-                  that truly empowers people.
+                  <strong>At Openroot</strong>, we build modern technology that
+                  empowers people and small businesses.
                 </p>
 
                 <p>
                   We create{" "}
-                  <strong>innovative, free-to-use software tools</strong> designed
-                  to make your personal and professional life easier — from{" "}
-                  <strong>financial utilities</strong> to{" "}
-                  <strong>unique productivity applications</strong> found nowhere
-                  else on the internet.
+                  <strong>free-to-use financial tools, AI utilities, and unique productivity apps</strong>{" "}
+                  that simplify everyday tasks.
                 </p>
 
                 <p>
-                  We also develop{" "}
+                  We also build{" "}
                   <strong>custom software solutions</strong> for{" "}
-                  <strong>small businesses</strong> needing powerful, affordable,
-                  scalable online systems — because great technology shouldn’t come
-                  with a heavy price tag.
+                  <strong>MSMEs</strong> to help them scale affordably and
+                  efficiently.
                 </p>
 
                 <p>
-                  Beyond development, <strong>Openroot</strong> is a place for{" "}
-                  <strong>learning and growth</strong>.
+                  Beyond software, Openroot is a platform for{" "}
+                  <strong>skill development</strong>.
                 </p>
 
-                <p>We offer expert-led classes in two modern skill areas:</p>
+                <p>Our expert-led programs include:</p>
 
                 <ul>
                   <li>
-                    💡 <strong>Prompt Engineering</strong> — Master AI efficiently
-                    and automate your tasks.
+                    💡 <strong>Prompt Engineering</strong> — Learn AI workflow
+                    optimization and automation.
                   </li>
                   <li>
-                    💰 <strong>Financial Investing</strong> — Learn smart investing
-                    from beginner to advanced levels.
+                    💰 <strong>Financial Investing</strong> — Master personal
+                    finance and wealth-building fundamentals.
                   </li>
                 </ul>
 
                 <p>
-                  Our mission: <br />
-                  <strong>
-                    Opening new roots of innovation, knowledge, and opportunity for
-                    everyone.
-                  </strong>
+                  <strong>Goal: </strong>  
+                   opening new roots of innovation, opportunity, and growth.
                 </p>
 
                 <p>
-                  Welcome to the future of technology and learning. <br />
+                  Welcome to the future of modern learning and technology.  
                   <strong>Welcome to Openroot.</strong>
-                </p>
-
-                <p>
-                  Other registered domains: <strong>ulvoxo.com</strong> &{" "}
-                  <strong>xfactorial.online</strong>
                 </p>
               </div>
             </motion.div>
