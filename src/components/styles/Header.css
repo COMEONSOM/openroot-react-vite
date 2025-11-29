@@ -33,29 +33,30 @@
   --transition-normal: 0.35s ease;
 
   /* LOGO WIDTH PER DEVICE */
-  --logo-width-mobile: 100px;      /* SMALL PHONES */
-  --logo-width-tablet: 120px;      /* TABLETS */
-  --logo-width-laptop: 140px;      /* Laptops */
-  --logo-width-desktop: 160px;     /* Desktop monitors */
-  --logo-width-tv: 200px;          /* TV / large screens */
-  --logo-width-folding: 130px;     /* Foldable devices */
+  --logo-width-mobile: 56px;      /* SMALL PHONES */
+  --logo-width-tablet: 86px;      /* TABLETS */
+  --logo-width-laptop: 106px;      /* Laptops */
+  --logo-width-desktop: 136px;     /* Desktop monitors */
+  --logo-width-tv: 166px;          /* TV / large screens */
 }
 
 /* ============================================================
    HEADER WRAPPER
    ============================================================ */
 .header {
-  max-width: 100%;
-  min-height: 64px;
-  max-height: 96px;
+  width: 100%;
+  height: var(--header-height);
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: var(--space-md) var(--space-lg);
-  background-color: var(--color-white);
-  border-bottom: 1px solid var(--color-border);
-  position: relative;
-  z-index: 100; /* MODAL OVERLAY WILL BE HIGHER */
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding: 0 var(--space-lg);
+  background: #000000ef;
+  border-bottom: 1px solid #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 150;
+  backdrop-filter: blur(6px);
 }
 
 /* ============================================================
@@ -138,6 +139,7 @@
 .avatar {
   width: 50%;
   height: 50%;
+  margin-left: 05px;
   object-fit: contain;          /* ✅ prevent cropping */
   object-position: center; 
   background-color: #f9fafb;    /* neutral bg for transparent images */
@@ -170,27 +172,22 @@
 }
 
 /* TABLETS */
-@media (min-width: 481px) and (max-width: 768px) {
+@media (min-width: 481px) and (max-width: 767px) {
   .logo-img { width: var(--logo-width-tablet); }
 }
 
 /* LAPTOPS / DEFAULT ALREADY SET */
 /* You can override if needed for specific range */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 999px) {
   .logo-img { width: var(--logo-width-laptop); }
 }
 
 /* DESKTOP LARGE MONITORS */
-@media (min-width: 1025px) and (max-width: 1440px) {
+@media (min-width: 1000px) and (max-width: 1286px) {
   .logo-img { width: var(--logo-width-desktop); }
 }
 
 /* TV / ULTRA WIDE */
-@media (min-width: 1441px) {
+@media (min-width: 1287px) {
   .logo-img { width: var(--logo-width-tv); }
-}
-
-/* FOLDING PHONES */
-@media (max-width: 600px) and (orientation: landscape) {
-  .logo-img { width: var(--logo-width-folding); }
 }
