@@ -28,13 +28,13 @@
         "type": 301
       },
       {
-        "source": "/Credit-Card-EMI-Calculator/**",
-        "destination": "https://comeonsom.github.io/Credit-Card-EMI-Calculator/",
+        "source": "/openroot-creditcard-emi-analyzer/**",
+        "destination": " https://comeonsom.github.io/openroot-creditcard-emi-analyzer/",
         "type": 301
       },
       {
-        "source": "/travel-expense-manager/**",
-        "destination": "https://comeonsom.github.io/tem-openroot/",
+        "source": "/openroot-travel-expense-manager/**",
+        "destination": " https://comeonsom.github.io/openroot-travel-expense-manager/",
         "type": 301
       },
       {
