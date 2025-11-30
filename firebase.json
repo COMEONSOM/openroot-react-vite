@@ -28,7 +28,7 @@
         "type": 301
       },
       {
-        "source": "/credit-card-emi-calculator/**",
+        "source": "/Credit-Card-EMI-Calculator/**",
         "destination": "https://comeonsom.github.io/Credit-Card-EMI-Calculator/",
         "type": 301
       },
