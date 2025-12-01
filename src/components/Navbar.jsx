@@ -133,10 +133,10 @@ const releasedSoftwares = Object.freeze([
   { name: "Stock Averaging", href: "https://openroot.in/stock-averaging/", icon: Icons.stockAveraging },
   { name: "SIP Return Analyzer", href: "https://openroot.in/return-analyzer/", icon: Icons.sipAnalyzer },
   { name: "Gold Jewel Price Indicator", href: "https://openroot.in/gold-jewel-price-indicator/", icon: Icons.goldJewel },
-  { name: "Credit Card EMI Calculator", href: "https://openroot.in/openroot-creditcard-emi-analyzer/", icon: Icons.creditEmi },
+  { name: "Credit Card EMI Analyzer", href: "https://openroot.in/openroot-creditcard-emi-analyzer/", icon: Icons.creditEmi },
   { name: "Travel Expense Manager", href: "https://openroot.in/openroot-travel-expense-manager/", icon: Icons.travelExpense },
   { name: "Makaut Grade Calculator", href: "https://openroot.in/makaut-grade-calculator/", icon: Icons.gradeCalculator },
-  { name: "Helping Hand", href: "https://openroot.in/openroot-helping-hand/", icon: Icons.helpingHand },
+  { name: "Helping Hand (Job Updates)", href: "https://openroot.in/openroot-helping-hand/", icon: Icons.helpingHand },
 ]);
 
 // ============================================================

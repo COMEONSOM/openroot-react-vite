@@ -148,7 +148,7 @@ function AboutCompany() {
           ))}
 
           <div className="why-openroot-final">
-            At <strong>OpenRoot</strong>, we believe in transforming how people
+            At <strong>Openroot</strong>, we believe in transforming how people
             and small businesses use technology — through innovation, education,
             and accessibility. Thank you for joining us on this journey of
             growth and empowerment.

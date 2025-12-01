@@ -1,35 +1,32 @@
 /* ============================================================
-   PROMOTION COMPONENT — OPENROOT (2026 ULTRA BUILD)
-   PERFORMANCE • ACCESSIBILITY • CORE WEB VITALS BOOSTED
+   PROMOTION COMPONENT — OPENROOT (2026 ULTRA SLIM EDITION)
+   PERFORMANCE • ACCESSIBILITY • CORE WEB VITALS OPTIMIZED
    ============================================================ */
 
 /* ============================================================
    ROOT VARIABLES
    ============================================================ */
 :root {
-  /* BRAND COLORS */
+  /* BRAND */
   --promo-primary: linear-gradient(135deg, #58caf0, #23436a);
   --promo-primary-hover: linear-gradient(135deg, #6a8dff, #93a9ff);
   --promo-text-light: #f8fafc;
   --promo-text-dark: #0e0e0e;
-  --promo-bg-dark: rgba(0, 0, 0, 0.78);
-  --promo-border-radius: 16px;
 
-  /* SPACING */
-  --promo-padding: 1.2rem;
-  --promo-gap: 1.15rem;
+  /* LAYOUT */
+  --promo-radius: 14px;
+  --promo-gap: 0.8rem;
+  --promo-padding: 1rem;
   --promo-max-width: 720px;
-  --promo-modal-padding: 1.6rem;
 
   /* TYPOGRAPHY */
-  --promo-font-base: "Inter", system-ui, sans-serif;
-  --promo-font-size: 1rem;
-  --promo-line-height: 1.65;
+  --promo-font: "Inter", system-ui, sans-serif;
+  --promo-size: 0.95rem;
+  --promo-line: 1.6;
 
   /* EFFECTS */
   --promo-transition: 0.25s ease;
-  --promo-shadow-light: 0 2px 12px rgba(0, 0, 0, 0.05);
-  --promo-shadow-strong: 0 12px 50px rgba(0, 0, 0, 0.45);
+  --promo-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
 }
 
 /* ============================================================
@@ -40,39 +37,33 @@
   flex-direction: column;
   align-items: center;
   padding: var(--promo-padding);
-  font-family: var(--promo-font-base);
-
-  /* Prevent CLS by reserving constant height for buttons */
-  min-height: 76px;
+  font-family: var(--promo-font);
+  min-height: 72px; /* Stable height */
 }
 
 /* ============================================================
-   NAVIGATION BUTTONS
+   NAVIGATION BUTTONS — SLIM ELEGANT EDITION
    ============================================================ */
 .promotion-nav {
   display: flex;
-  justify-content: center;
   gap: var(--promo-gap);
   width: 100%;
-  max-width: 500px;
+  max-width: 380px; /* Slimmer container */
 }
 
 .promo-btn {
+  flex: 1;
   background: var(--promo-primary);
   color: var(--promo-text-light);
-  flex: 1;
-  min-height: 44px; /* ensures perfect accessibility */
-  padding: 0.75rem;
+  padding: 0.55rem 0.75rem; /* SLIM HEIGHT */
+  min-height: 38px;         /* Accessible yet not bulky */
   border: none;
-  border-radius: 10px;
-  font-size: var(--promo-font-size);
+  border-radius: 8px;       /* Slim corners */
+  font-size: var(--promo-size);
   font-weight: 500;
   cursor: pointer;
   transition: var(--promo-transition);
-  box-shadow: var(--promo-shadow-light);
-
-  /* Prevent CLS by reserving space BEFORE load */
-  transform: translateY(0); 
+  transform: translateY(0);
 }
 
 .promo-btn:hover,
@@ -82,58 +73,33 @@
   transform: translateY(-2px);
 }
 
-.promo-btn:active {
-  transform: translateY(0);
-}
-
-/* SMALL DEVICES */
-@media (max-width: 420px) {
-  .promotion-nav {
-    flex-wrap: wrap;
-  }
-  .promo-btn {
-    font-size: 0.65rem;
-  }
-}
-
 /* ============================================================
-   MODAL OVERLAY — FIXED, STABLE, NO SCROLL SHIFT
+   MODAL OVERLAY
    ============================================================ */
 .about-modal-overlay {
   position: fixed;
   inset: 0;
-  background: var(--promo-bg-dark);
+  background: rgba(0, 0, 0, 0.78);
   backdrop-filter: blur(8px);
   z-index: 999999;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   padding: 1.4rem;
   overflow-y: auto;
-
-  /* Prevent layout shifts on open */
-  will-change: opacity;
 }
 
 /* ============================================================
-   MODAL CONTENT (CARD)
+   MODAL CONTENT
    ============================================================ */
 .about-modal-content {
-  background: #ffffff;
+  background: #fff;
   color: var(--promo-text-dark);
   width: 100%;
   max-width: var(--promo-max-width);
-  border-radius: var(--promo-border-radius);
-
-  padding: var(--promo-modal-padding);
-  box-shadow: var(--promo-shadow-strong);
-
-  /* Smooth movement, no CLS */
-  transform: translateY(0);
-  will-change: transform, opacity;
-
+  border-radius: var(--promo-radius);
+  padding: 1.6rem;
+  box-shadow: var(--promo-shadow);
   max-height: 88vh;
   overflow-y: auto;
 }
@@ -143,40 +109,35 @@
    ============================================================ */
 .close-btn {
   position: absolute;
-  top: 10px;
-  right: 14px;
-
-  font-size: 1.85rem;
+  top: 8px;
+  right: 12px;
+  font-size: 1.7rem;
   font-weight: 600;
-
   background: transparent;
   border: none;
   cursor: pointer;
-
   color: #333;
   transition: 0.2s ease;
-  z-index: 5;
 }
 
 .close-btn:hover {
-  transform: scale(1.2);
+  transform: scale(1.15);
 }
 
 /* ============================================================
-   CONTENT
+   CONTENT STYLES
    ============================================================ */
 .promo-heading {
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  text-align: left;
 }
 
 .about-company-promo {
-  font-size: var(--promo-font-size);
-  line-height: var(--promo-line-height);
+  font-size: var(--promo-size);
+  line-height: var(--promo-line);
   color: #1e293b;
-  padding-top: 0.75rem;
+  padding-top: 0.5rem;
 }
 
 .about-company-promo p {
@@ -186,55 +147,45 @@
 
 .about-company-promo ul {
   list-style: none;
-  margin-left: 0;
-  margin-top: 0.5rem;
   padding-left: 0;
+  margin-top: 0.4rem;
 }
 
 .about-company-promo li {
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.55rem;
 }
 
 .domain-note {
-  margin-top: 1.2rem;
+  margin-top: 1.1rem;
   font-style: italic;
   color: #475569;
 }
 
 /* ============================================================
-   RESPONSIVE BREAKPOINTS
+   RESPONSIVE
    ============================================================ */
 @media (max-width: 480px) {
+  .promotion-nav {
+    max-width: 100%;
+    flex-wrap: wrap;
+  }
+  .promo-btn {
+    font-size: 0.78rem;
+    min-height: 36px;
+    padding: 0.45rem;
+  }
   .about-modal-content {
     padding: 1.1rem;
-    border-radius: 12px;
+    border-radius: 10px;
   }
   .promo-heading {
     font-size: 1.15rem;
   }
-  .about-company-promo {
-    font-size: 0.95rem;
-  }
-}
-
-@media (min-width: 481px) and (max-width: 1024px) {
-  .about-modal-content {
-    padding: 1.8rem;
-  }
-}
-
-@media (min-width: 1025px) {
-  .about-modal-content {
-    padding: 2.3rem;
-  }
 }
 
 @media (min-width: 1600px) {
-  .promo-btn {
-    font-size: 1rem;
-  }
   .about-modal-content {
-    max-width: 900px;
-    padding: 3rem;
+    max-width: 880px;
+    padding: 2.8rem;
   }
 }
