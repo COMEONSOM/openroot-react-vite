@@ -23,8 +23,8 @@
         "type": 301
       },
       {
-        "source": "/gold-jewel-price-indicator/**",
-        "destination": "https://comeonsom.github.io/Gold-Jewellery-Price-Calculator/",
+        "source": "/openroot-gold-ai/**",
+        "destination": "https://comeonsom.github.io/openroot-gold-ai/",
         "type": 301
       },
       {
@@ -39,7 +39,7 @@
       },
       {
         "source": "/openroot-makaut_grade_and_percentage-calculator//**",
-        "destination": " https://comeonsom.github.io/openroot-makaut_grade_and_percentage-calculator/",
+        "destination": "https://comeonsom.github.io/openroot-makaut_grade_and_percentage-calculator/",
         "type": 301
       }
     ]
