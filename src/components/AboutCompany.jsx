@@ -63,7 +63,7 @@ const HIGHLIGHTS = Object.freeze([
 ]);
 
 // ============================================================
-// PURE FUNCTION — unchanged
+// PURE FUNCTION
 // ============================================================
 const renderParagraphs = (arr = []) =>
   arr.map(([label, text], i) => (

@@ -1,128 +1,209 @@
-/* ============================
-   Root Design Tokens (Colors & Spacing)
-============================ */
-:root {
-  --bg-color: #f8fafc;
-  --text-color: #1e293b;
-  --primary: #4431f5;
-  --primary-hover: #2b55de;
-  --section-gap: 3rem;
-  --icon-size: 1.4rem;
-  --card-radius: 12px;
-  --transition: 0.3s ease-in-out;
+/* ===================================================
+   OPENROOT — CONTACT FOLLOW (FULLY SCOPED)
+   NO GLOBAL OVERRIDE — SAFE FOR ENTIRE SITE
+=================================================== */
+
+.contact-follow {
+  --text-color: #ffffff;
+  --icon-size: 42px;
+
+  --glass-bg: rgba(255, 255, 255, 0.12);
+  --glass-border: rgba(255, 255, 255, 0.22);
+
+  --card-radius: 20px;
+  --transition: 0.35s cubic-bezier(.21,1.02,.73,1);
+
+  --aurora-1: #680aff;
+  --aurora-2: #000000;
+  --aurora-3: #000000;
+
+  width: 100%;
+  padding: 5rem 2rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  background: radial-gradient(circle at 18% 20%, rgba(9,22,38,0.12) 0%, rgba(2,9,18,0.09) 70%);
+  mix-blend-mode: lighten;
+ 
 }
 
-/* ============================
-   Section Layout
-============================ */
-section {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  padding: 3rem 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+/* =============== AURORA EFFECT =============== */
+
+.contact-follow::before,
+.contact-follow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 10% 80%, var(--aurora-1), transparent 55%),
+    radial-gradient(circle at 80% 20%, var(--aurora-2), transparent 55%),
+    radial-gradient(circle at 50% 50%, var(--aurora-3), transparent 60%);
+  filter: blur(110px);
+  opacity: 0.6;
+  animation: auroraMove 18s infinite alternate ease-in-out;
+  z-index: 0;
+}
+
+@keyframes auroraMove {
+  from { transform: translateX(-12%) translateY(-10%) scale(1.1); }
+  to   { transform: translateX(12%) translateY(6%) scale(1); }
+}
+
+
+/* =============== CONTAINER =============== */
+
+.contact-follow .contact-container {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  gap: 4.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 920px;
+}
+
+/* =============== BOX =============== */
+
+.contact-follow .contact-box {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--section-gap);
+  min-width: 240px;
 }
 
-.contact-container {
-  display: flex;
-  gap: 4rem;
-  justify-content: center;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  width: 100%;
-  max-width: 1100px;
-}
+/* Title */
 
-/* ============================
-   Section Box Styling
-============================ */
-.contact-box {
-  flex: 1;
-  min-width: 280px;
-  max-width: 500px;
-  text-align: center;
-}
-
-.contact-box h2 {
-  font-size: 1.6rem;
+.contact-follow .contact-box h2 {
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 1.3px;
+  margin-bottom: 2.2rem;
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  color:#f8faf8;
-  border-bottom: 2px solid var(--primary);
-  display: inline-block;
-  padding-bottom: 0.4rem;
-  letter-spacing: 1px;
+
+  background: linear-gradient(90deg, #ffffff, #b3e0ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow: 0 0 15px rgba(255,255,255,0.25);
 }
 
-/* ============================
-   Icon Row Layout
-============================ */
-.icon-row {
+/* =============== ICON ROW =============== */
+
+.contact-follow .icon-row {
   display: flex;
+  gap: 1.6rem;
   justify-content: center;
-  flex-wrap: wrap;
-  gap: 1.2rem;
-}
-
-/* ============================
-   Icon Link Styling (Minimal Hover)
-============================ */
-.contact-icon {
-  color: var(--primary);
-  font-size: 2rem;
-  text-decoration: none;
-  display: flex;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.5rem 1rem;
-  border: 1px solid blue;
+}
+
+/* =============== ICON BUTTON =============== */
+
+.contact-follow .contact-icon {
+  width: 76px;
+  height: 76px;
+
   border-radius: var(--card-radius);
-  background-color: transparent;
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--glass-border);
+
+  display: grid;
+  place-items: center;
+
+  box-shadow:
+    inset 0 0 0.6px rgba(255,255,255,0.4),
+    0 10px 28px rgba(0,0,0,0.35);
+
+  cursor: pointer;
   transition: var(--transition);
-  box-shadow: none;
+
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
 }
 
-.contact-icon i {
-  font-size: 2rem;
-  transition: none;
+/* Shine */
+
+.contact-follow .contact-icon::after {
+  content: "";
+  position: absolute;
+  width: 60%;
+  height: 260%;
+  top: -140%;
+  left: -40%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.35),
+    transparent
+  );
+  transform: rotate(35deg);
+  transition: 0.6s ease;
 }
 
-.contact-icon:hover {
-  color: var(--primary-hover);
-  border-color: var(--primary-hover);
-  background-color: rgba(65, 105, 225, 0.08);
+.contact-follow .contact-icon:hover::after {
+  top: -30%;
+  left: 140%;
 }
 
-.contact-icon:hover i {
-  transform: none;
+/* Hover */
+
+.contact-follow .contact-icon:hover {
+  transform: translateY(-10px) scale(1.1) rotateX(8deg);
+  border-color: rgba(255,255,255,0.6);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.55);
 }
 
-.contact-icon .lottie-container {
-  width: 60px;
-  height: 60px;
+/* SVG */
+
+.contact-follow .contact-svg {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  object-fit: contain;
+  transition: 0.35s ease;
+  filter: brightness(0.85);
 }
 
-/* ============================
-   Responsive Adjustments
-============================ */
+.contact-follow .contact-icon:hover .contact-svg {
+  transform: scale(1.2);
+  filter: none;
+}
+
+/* =============== MOBILE =============== */
+
 @media (max-width: 768px) {
-  .contact-container {
+  .contact-follow .contact-container {
     flex-direction: column;
-    align-items: center;
+    gap: 3.5rem;
   }
 
-  .contact-box {
-    max-width: 100%;
+  .contact-follow .contact-box h2 {
+    font-size: 1.35rem;
   }
 
-  .icon-row {
-    gap: 1rem;
+  .contact-follow .contact-icon {
+    width: 66px;
+    height: 66px;
   }
 
-  .contact-icon {
-    justify-content: center;
+  .contact-follow .contact-svg {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+@media (max-width: 420px) {
+  .contact-follow {
+    padding: 4rem 1rem;
+  }
+
+  .contact-follow .icon-row {
+    gap: 1.2rem;
   }
 }

@@ -43,7 +43,7 @@ export default function ContactFollow() {
   }, []);
 
   return (
-    <section>
+    <section className="contact-follow">
       <div className="contact-container">
 
         {/* ================= FOLLOW US ================= */}

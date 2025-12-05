@@ -38,8 +38,8 @@
         "type": 301
       },
       {
-        "source": "/makaut-grade-calculator/**",
-        "destination": "https://comeonsom.github.io/makaut_grade_converter/",
+        "source": "/openroot-makaut_grade_and_percentage-calculator//**",
+        "destination": " https://comeonsom.github.io/openroot-makaut_grade_and_percentage-calculator/",
         "type": 301
       }
     ]

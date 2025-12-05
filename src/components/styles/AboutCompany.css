@@ -108,11 +108,6 @@
   cursor: pointer;
 }
 
-.work-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 12px 32px var(--shadow-hover);
-}
-
 .work-card h3 {
   position: relative;
   font-size: var(--font-size-md);
@@ -147,11 +142,6 @@
   display: block;
   text-align: center;
   transition: color 0.2s ease;
-}
-
-.work-card .cta:hover {
-  color: var(--color-primary-hover);
-  text-decoration: underline;
 }
 
 /* ============================================================
@@ -223,38 +213,6 @@
   margin-top: var(--spacing-md);
 }
 
-/* ============================================================
-   GROWTH CHART SECTION
-   ============================================================ */
-.growth-chart {
-  margin-top: var(--spacing-lg);
-  text-align: center;
-}
-.growth-chart h3 {
-  font-size: 1.75rem;       /* ~text-2xl */
-  font-weight: 700;         /* bold */
-  color: #1f2937;           /* gray-800 */
-  margin-bottom: 1.5rem;    /* ~mb-6 */
-  letter-spacing: 0.05em;   /* tracking-wide */
-  text-align: center;
-}
-/* ============================================================
-   NEW BADGE TAG
-   ============================================================ */
-.new-badge {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  background-color: var(--color-success);
-  color: white;
-  padding: 6px 12px;
-  font-size: var(--font-size-xs);
-  border-radius: var(--radius-full);
-  font-weight: 700;
-  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-  animation: pulse 2s infinite;
-  z-index: 2;
-}
 
 @keyframes pulse {
   0% {
