@@ -4,7 +4,7 @@
    ============================================================ */
 :root {
   /* BRAND COLORS */
-  --color-primary: #4431f5;
+  --color-primary: #7636dc;
   --color-primary-hover: #352cdf;
   --color-accent: #ffffff;
   --color-success: #26ec26;
@@ -208,7 +208,7 @@
 .join-openroot {
   text-align: center;
   font-weight: 700;
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   color: var(--color-primary);
   margin-top: var(--spacing-md);
 }

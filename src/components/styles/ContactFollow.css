@@ -1,135 +1,235 @@
-/* ===================================================
-   OPENROOT — CONTACT FOLLOW (FULLY SCOPED)
-   NO GLOBAL OVERRIDE — SAFE FOR ENTIRE SITE
-=================================================== */
+/* ============================================================
+   OPENROOT — CONTACT FOLLOW (PERFORMANCE-FIRST, READABLE, SCALABLE)
+   VERSION: 2025.9-PLUS — SINGLE-SCOPE VARIABLES, RESPONSIVE LAYOUT,
+   GRID/FLEX HYBRID, ACCESSIBILITY, REDUCED-MOTION SUPPORT
+   ============================================================ */
 
+/* ----------------------------------------------------------------
+   SECTION: ROOT VARIABLES (SCOPED TO .contact-follow — NO GLOBALS)
+   USE THESE TO TUNE THE THEME, SIZE SCALE, MOTION & BREAKPOINTS.
+   ---------------------------------------------------------------- */
 .contact-follow {
-  --text-color: #ffffff;
-  --icon-size: 42px;
+  /* THEME COLORS & GLASS */
+  --cf-text: #ffffff;
+  --cf-glass-bg: rgba(255,255,255,0.12);
+  --cf-glass-border: rgba(255,255,255,0.22);
 
-  --glass-bg: rgba(255, 255, 255, 0.12);
-  --glass-border: rgba(255, 255, 255, 0.22);
+  /* ACCENT / AURORA */
+  --cf-aurora-1: #680aff;
+  --cf-aurora-2: #000000;
+  --cf-aurora-3: #000000;
 
-  --card-radius: 20px;
-  --transition: 0.35s cubic-bezier(.21,1.02,.73,1);
+  /* SIZING SCALE */
+  --cf-icon-size: 42px;       /* DEFAULT ICON SIZE */
+  --cf-icon-size-sm: 36px;    /* SMALLER ICON */
+  --cf-icon-size-xs: 30px;    /* EXTRA SMALL */
+  --cf-box-size: 76px;        /* ICON BOX WIDTH / HEIGHT */
+  --cf-box-size-sm: 66px;
 
-  --aurora-1: #680aff;
-  --aurora-2: #000000;
-  --aurora-3: #000000;
+  /* LAYOUT TOKENS */
+  --cf-card-radius: 20px;
+  --cf-gap-lg: 4.5rem;
+  --cf-gap-md: 2.5rem;
+  --cf-gap-sm: 1.6rem;
 
+  /* MOTION */
+  --cf-transition: 0.35s cubic-bezier(.21,1.02,.73,1);
+  --cf-shine-transition: 0.6s ease;
+
+  /* BLUR / PERF */
+  --cf-aurora-blur: 110px;    /* HIGH-END */
+  --cf-aurora-blur-sm: 44px;  /* MOBILE-FALLBACK */
+  --cf-backdrop-blur: 14px;   /* GLASS BLUR */
+
+  /* BREAKPOINTS (EDIT HERE TO CHANGE RESPONSIVE BREAKPOINTS) */
+  --cf-bp-xs: 420px;  /* VERY SMALL / FOLDING PHONE */
+  --cf-bp-sm: 768px;  /* PHONE / TABLET */
+  --cf-bp-md: 1024px; /* LAPTOP / SMALL DESKTOP */
+  --cf-bp-lg: 1440px; /* LARGE DESKTOP */
+  --cf-bp-tv: 1600px; /* TV / ULTRA */
+}
+
+/* ----------------------------------------------------------------
+   GLOBAL ROOT LAYER — STRUCTURE + BACKGROUND
+   - ISOLATION AND CLIPPING TO PREVENT BLUR BLEED
+   - LIGHTWEIGHT BACKGROUND RADIAL FOR SUBTLE DEPTH
+   ---------------------------------------------------------------- */
+.contact-follow {
+  /* LAYOUT SIZING */
   width: 100%;
   padding: 5rem 2rem;
   position: relative;
   overflow: hidden;
+
+  /* VISUALS */
   display: flex;
   justify-content: center;
-  background: radial-gradient(circle at 18% 20%, rgba(9,22,38,0.12) 0%, rgba(2,9,18,0.09) 70%);
-  mix-blend-mode: lighten;
- 
+  color: var(--cf-text);
+  background: radial-gradient(circle at 18% 20%,
+    rgba(9,22,38,0.12) 0%, rgba(2,9,18,0.09) 70%);
+
+  /* STACKING + PERFORMANCE */
+  isolation: isolate;        /* ISOLATE BLENDING */
+  clip-path: inset(0);       /* HARD CLIP SO BLURS DON'T BLEED */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  will-change: transform;
 }
 
-
-/* =============== AURORA EFFECT =============== */
-
-.contact-follow::before,
-.contact-follow::after {
+/* ----------------------------------------------------------------
+   AURORA LAYER (SINGLE PSEUDO ELEMENT)
+   - USE SINGLE PSEUDO-ELEMENT FOR PERFORMANCE (NOT MULTIPLE)
+   - REDUCE BLUR/AUTOPLAY ON SMALL SCREENS / REDUCED MOTION
+   ---------------------------------------------------------------- */
+.contact-follow::before {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(circle at 10% 80%, var(--aurora-1), transparent 55%),
-    radial-gradient(circle at 80% 20%, var(--aurora-2), transparent 55%),
-    radial-gradient(circle at 50% 50%, var(--aurora-3), transparent 60%);
-  filter: blur(110px);
-  opacity: 0.6;
-  animation: auroraMove 18s infinite alternate ease-in-out;
   z-index: 0;
+  pointer-events: none;
+
+  /* AURORA LAYERS COMBINED (ONE PAINT) */
+  background:
+    radial-gradient(circle at 10% 80%, var(--cf-aurora-1) 0%, transparent 55%),
+    radial-gradient(circle at 80% 20%, var(--cf-aurora-2) 0%, transparent 55%),
+    radial-gradient(circle at 50% 50%, var(--cf-aurora-3) 0%, transparent 60%);
+
+  filter: blur(var(--cf-aurora-blur));
+  opacity: 0.6;
+  transform-origin: center;
+  animation: cf-aurora-move 18s infinite alternate ease-in-out;
 }
 
-@keyframes auroraMove {
+/* KEYFRAME AURORA (SUBTLE TRANSLATION & SCALE) */
+@keyframes cf-aurora-move {
   from { transform: translateX(-12%) translateY(-10%) scale(1.1); }
-  to   { transform: translateX(12%) translateY(6%) scale(1); }
+  to   { transform: translateX(12%)  translateY(6%)  scale(1); }
 }
 
+/* REDUCED MOTION / MOBILE PERF TWEAKS */
+@media (prefers-reduced-motion: reduce),
+       (max-width: 480px) {
+  .contact-follow::before {
+    animation: none;
+    filter: blur(44px);
+    opacity: 0.32;
+  }
+}
 
-/* =============== CONTAINER =============== */
-
+/* ----------------------------------------------------------------
+   CONTENT CONTAINER
+   - MAX-WIDTH CENTERED, FLEX BY DEFAULT (STACKS NICELY)
+   - SWITCHES TO GRID AT MD FOR 2-COLUMN LAYOUT
+   ---------------------------------------------------------------- */
 .contact-follow .contact-container {
   position: relative;
-  z-index: 3;
-  display: flex;
-  gap: 4.5rem;
+  z-index: 3; /* KEEP ABOVE AURORA */
+  width: min(920px, 96%);
+  display: flex;                /* DEFAULT: FLEX FOR EASY WRAP ON SMALL DEVICES */
+  gap: var(--cf-gap-lg);
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  max-width: 920px;
+  margin-inline: auto;
 }
 
-/* =============== BOX =============== */
+/* GRID AT MD — USE GRID WHEN TWO-COLUMNS IS DESIRED (BETTER ALIGNMENT) */
+@media (min-width: calc(var(--cf-bp-sm) + 1px)) {
+  .contact-follow .contact-container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    gap: var(--cf-gap-md);
+    align-items: start;
+  }
+}
 
+/* WIDE / TV — WIDER GUTTERS */
+@media (min-width: var(--cf-bp-lg)) {
+  .contact-follow {
+    padding: 6rem 3.5rem;
+  }
+  .contact-follow .contact-container {
+    width: min(1100px, 94%);
+    gap: calc(var(--cf-gap-lg) + 1rem);
+  }
+}
+
+/* ----------------------------------------------------------------
+   CONTACT BOX (CARD) — KEEP MINIMAL STRUCTURE
+   - NO FORCED WIDTHS; USE MIN/MAX SIZING FOR SCALE
+   - USE GLASS TOKENS
+   ---------------------------------------------------------------- */
 .contact-follow .contact-box {
   display: flex;
   flex-direction: column;
   align-items: center;
   min-width: 240px;
+  gap: 1.4rem;
+  padding: 0;               /* LEAVE PADDING TO CHILDREN IF NEEDED */
+  background: transparent;  /* CARDS MAY HANDLE THEIR OWN BACKGROUNDS */
+  position: relative;
 }
 
-/* Title */
-
+/* TITLE — GRADIENT TEXT (KEEP COMPATIBILITY LINES) */
 .contact-follow .contact-box h2 {
   font-size: 1.5rem;
   font-weight: 900;
   letter-spacing: 1.3px;
-  margin-bottom: 2.2rem;
+  margin: 0 0 1rem 0;
   text-transform: uppercase;
 
+  /* GRADIENT TEXT — SAFE CLIP USAGE */
   background: linear-gradient(90deg, #ffffff, #b3e0ff);
+  -webkit-background-clip: text;
   background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-background-clip: text;
+  color: transparent;
   -webkit-text-fill-color: transparent;
 
   text-shadow: 0 0 15px rgba(255,255,255,0.25);
+  text-align: center;
 }
 
-/* =============== ICON ROW =============== */
-
+/* ----------------------------------------------------------------
+   ICON ROW & ICON BUTTON
+   - ICON ROW USES FLEX, WRAPS WHEN NEEDED
+   - ICON BUTTONS ARE A UNIFIED COMPONENT
+   ---------------------------------------------------------------- */
 .contact-follow .icon-row {
   display: flex;
-  gap: 1.6rem;
+  gap: var(--cf-gap-sm);
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
-/* =============== ICON BUTTON =============== */
-
+/* ICON BUTTON (GLASS BOX) */
 .contact-follow .contact-icon {
-  width: 76px;
-  height: 76px;
-
-  border-radius: var(--card-radius);
-  background: var(--glass-bg);
-  backdrop-filter: blur(14px);
-  border: 1px solid var(--glass-border);
+  --cf-current-box: var(--cf-box-size);
+  width: var(--cf-current-box);
+  height: var(--cf-current-box);
+  border-radius: var(--cf-card-radius);
+  background: var(--cf-glass-bg);
+  border: 1px solid var(--cf-glass-border);
+  backdrop-filter: blur(var(--cf-backdrop-blur));
+  -webkit-backdrop-filter: blur(var(--cf-backdrop-blur));
 
   display: grid;
   place-items: center;
+  position: relative;
+  overflow: hidden;
 
   box-shadow:
     inset 0 0 0.6px rgba(255,255,255,0.4),
     0 10px 28px rgba(0,0,0,0.35);
 
-  cursor: pointer;
-  transition: var(--transition);
-
-  position: relative;
-  overflow: hidden;
+  transition: transform var(--cf-transition),
+              box-shadow var(--cf-transition),
+              border-color var(--cf-transition);
   transform-style: preserve-3d;
+  cursor: pointer;
 }
 
-/* Shine */
-
+/* SHINE LAYER (LIGHTWEIGHT TRANSFORM) */
 .contact-follow .contact-icon::after {
   content: "";
   position: absolute;
@@ -137,73 +237,153 @@
   height: 260%;
   top: -140%;
   left: -40%;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(255,255,255,0.35),
-    transparent
-  );
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
   transform: rotate(35deg);
-  transition: 0.6s ease;
+  transition: transform var(--cf-shine-transition), top var(--cf-shine-transition), left var(--cf-shine-transition);
+  pointer-events: none;
 }
 
-.contact-follow .contact-icon:hover::after {
-  top: -30%;
-  left: 140%;
+/* HOVER / FOCUS INTERACTION (RESPECTS REDUCED-MOTION) */
+@media (hover: hover) and (pointer: fine) {
+  .contact-follow .contact-icon:hover,
+  .contact-follow .contact-icon:focus {
+    transform: translateY(-10px) scale(1.1);
+    border-color: rgba(255,255,255,0.6);
+    box-shadow: 0 18px 45px rgba(0,0,0,0.55);
+    outline: none;
+  }
+
+  .contact-follow .contact-icon:hover::after,
+  .contact-follow .contact-icon:focus::after {
+    top: -30%;
+    left: 140%;
+    transform: rotate(35deg);
+  }
 }
 
-/* Hover */
-
-.contact-follow .contact-icon:hover {
-  transform: translateY(-10px) scale(1.1) rotateX(8deg);
-  border-color: rgba(255,255,255,0.6);
-  box-shadow: 0 18px 45px rgba(0,0,0,0.55);
+/* KEYBOARD ACCESSIBILITY: VISIBLE FOCUS FOR KEYBOARD USERS */
+.contact-follow .contact-icon:focus-visible {
+  box-shadow: 0 0 0 4px rgba(104,10,255,0.14), 0 12px 28px rgba(0,0,0,0.45);
+  outline: none;
 }
 
-/* SVG */
-
+/* ICON SVG SIZING + TRANSFORM */
 .contact-follow .contact-svg {
-  width: var(--icon-size);
-  height: var(--icon-size);
+  width: calc(var(--cf-icon-size) * 1);
+  height: calc(var(--cf-icon-size) * 1);
   object-fit: contain;
-  transition: 0.35s ease;
+  transition: transform var(--cf-transition), filter var(--cf-transition);
   filter: brightness(0.85);
 }
 
-.contact-follow .contact-icon:hover .contact-svg {
-  transform: scale(1.2);
-  filter: none;
+/* ICON HOVER STATE */
+@media (hover: hover) and (pointer: fine) {
+  .contact-follow .contact-icon:hover .contact-svg,
+  .contact-follow .contact-icon:focus .contact-svg {
+    transform: scale(1.2);
+    filter: none;
+  }
 }
 
-/* =============== MOBILE =============== */
-
-@media (max-width: 768px) {
-  .contact-follow .contact-container {
-    flex-direction: column;
-    gap: 3.5rem;
+/* ----------------------------------------------------------------
+   RESPONSIVE SIZE ADJUSTMENTS
+   - CHANGE ICON BOX SIZE & SVG SIZE AT BREAKPOINTS
+   ---------------------------------------------------------------- */
+@media (max-width: var(--cf-bp-sm)) {
+  .contact-follow {
+    padding: 4rem 1rem;
   }
 
-  .contact-follow .contact-box h2 {
-    font-size: 1.35rem;
+  .contact-follow .contact-container {
+    gap: 3.5rem;
+    display: flex;
+    flex-direction: column;
   }
 
   .contact-follow .contact-icon {
-    width: 66px;
-    height: 66px;
+    --cf-current-box: var(--cf-box-size-sm);
   }
 
   .contact-follow .contact-svg {
-    width: 36px;
-    height: 36px;
+    width: calc(var(--cf-icon-size-sm) * 1);
+    height: calc(var(--cf-icon-size-sm) * 1);
+  }
+
+  .contact-follow::before {
+    filter: blur(var(--cf-aurora-blur-sm));
+    opacity: 0.32;
   }
 }
 
-@media (max-width: 420px) {
+/* VERY SMALL / FOLDING PHONE TREATMENT */
+@media (max-width: var(--cf-bp-xs)) {
   .contact-follow {
-    padding: 4rem 1rem;
+    padding: 3.6rem 0.75rem;
   }
 
   .contact-follow .icon-row {
     gap: 1.2rem;
   }
+
+  .contact-follow .contact-box h2 {
+    font-size: 1.35rem;
+    margin-bottom: 1.8rem;
+  }
+
+  .contact-follow .contact-icon {
+    --cf-current-box: 56px;
+  }
+
+  .contact-follow .contact-svg {
+    width: calc(var(--cf-icon-size-xs) * 1);
+    height: calc(var(--cf-icon-size-xs) * 1);
+  }
 }
+
+/* LARGE SCREENS / TV — SCALE UP PADDING & GAPS */
+@media (min-width: var(--cf-bp-lg)) {
+  .contact-follow {
+    padding: 6.5rem 3.5rem;
+  }
+
+  .contact-follow .contact-container {
+    gap: calc(var(--cf-gap-lg) + 1rem);
+  }
+
+  .contact-follow .contact-icon {
+    --cf-current-box: 92px;
+  }
+
+  .contact-follow .contact-svg {
+    width: calc(var(--cf-icon-size) * 1.3);
+    height: calc(var(--cf-icon-size) * 1.3);
+  }
+}
+
+/* ----------------------------------------------------------------
+   PERFORMANCE / FALLBACKS
+   - DISABLE EXPENSIVE TRANSITIONS FOR REDUCED-MOTION USERS
+   - FALLBACKS FOR DEVICES THAT DON'T SUPPORT BACKDROP-FILTER
+   ---------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .contact-follow,
+  .contact-follow .contact-icon,
+  .contact-follow .contact-svg {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .contact-follow::before { filter: blur(44px); }
+}
+
+/* DROP A UTILITY TO DISABLE SHINE EFFECT ON SPECIFIC ICONS:
+   USAGE: <div class="contact-icon no-shine">... */
+.contact-follow .contact-icon.no-shine::after { display: none; }
+
+/* ----------------------------------------------------------------
+   CLEANUP / BEST PRACTICES NOTES (READABLE FOR DEVELOPERS)
+   - NO DUPLICATE PROPS, NO VENDOR JS-ONLY PROPERTIES
+   - SINGLE AURORA PSEUDO-ELEMENT FOR PERFORMANCE
+   - GRID USED WHERE ALIGNMENT & COLUMN CONTROL MATTER (MD+)
+   - FLEX USED FOR SMALL SCREENS FOR NATURAL WRAP & STACKING
+   ---------------------------------------------------------------- */

@@ -1,8 +1,8 @@
 :root {
-  --footer-bg: #00000000;
+  --footer-bg: #1f003a00;
   --footer-text: #7e7e7d;
-  --footer-border: #000000;
-  --link-color: #3421e3;
+  --footer-border: #00000000;
+  --link-color: #7636dc;
   --link-hover-color: #3113dc;
   --glow-color: rgb(255, 255, 255); /* silver glow */
 }

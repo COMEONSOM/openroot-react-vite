@@ -9,7 +9,7 @@
 :root {
   /* BRAND */
   --promo-primary: linear-gradient(135deg, #58caf0, #23436a);
-  --promo-primary-hover: linear-gradient(135deg, #6a8dff, #93a9ff);
+  --promo-primary-hover: linear-gradient(135deg, #926aff, #a793ff);
   --promo-text-light: #f8fafc;
   --promo-text-dark: #0e0e0e;
 
@@ -102,6 +102,7 @@
   box-shadow: var(--promo-shadow);
   max-height: 88vh;
   overflow-y: auto;
+  position: relative; 
 }
 
 /* ============================================================
@@ -109,15 +110,26 @@
    ============================================================ */
 .close-btn {
   position: absolute;
-  top: 8px;
-  right: 12px;
-  font-size: 1.7rem;
-  font-weight: 600;
-  background: transparent;
-  border: none;
+  top: 14px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.4rem;
+  font-weight: bold;
+  line-height: 1;
+
+  border-radius: 50%;
+  background: rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.08);
+
   cursor: pointer;
-  color: #333;
-  transition: 0.2s ease;
+  color: #222;
+  transition: 0.25s ease;
 }
 
 .close-btn:hover {
