@@ -69,32 +69,14 @@ const redirectTo = async (url) => {
 // 🔹 ICON COMPONENTS
 // ============================================================
 const Icons = {
-  stockAveraging: (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="28" height="28" role="img" aria-labelledby="sa6">
-      <title id="sa6">Stock Averaging — bars merging to average</title>
-      <rect x="3" y="10" width="2" height="5" rx="0.4"/>
-      <rect x="7" y="8" width="2" height="7" rx="0.4"/>
-      <rect x="11" y="6" width="2" height="9" rx="0.4"/>
-      <rect x="15" y="8" width="2" height="7" rx="0.4"/>
-      <rect x="19" y="10" width="2" height="5" rx="0.4"/>
-      <circle cx="12" cy="17.5" r="1.2"/>
-    </svg>
-  ),
-  sipAnalyzer: (
+  timeAI: (
     <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor">
       <path d="M10 2a8 8 0 0 1 6.3 12.8l4.9 4.9-1.4 1.4-4.9-4.9A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12zm-2 7v3h1.5v-3H8zm2.5-2v5H12v-5h-1.5zm2.5 1v4h1.5v-4H13z"/>
     </svg>
   ),
-  goldJewel: (
+  Classes: (
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" width="30" height="30">
       <path d="M12 2 2 9l10 13 10-13Zm0 2.69 6.93 4.68L12 20.1 5.07 9.37Z" />
-    </svg>
-  ),
-  creditEmi: (
-    <svg viewBox="0 0 24 24" width="36" height="36" aria-hidden>
-      <rect x="2" y="5" width="20" height="14" rx="2"></rect>
-      <rect x="3.5" y="9" width="6" height="2" rx="0.6" fill="#fff"></rect>
-      <text x="16" y="14" fontSize="7" textAnchor="middle" fill="#fff" fontFamily="sans-serif">₹</text>
     </svg>
   ),
   travelExpense: (
@@ -130,13 +112,11 @@ const Icons = {
 // 🔹 SOFTWARE DATA
 // ============================================================
 const releasedSoftwares = Object.freeze([
-  { name: "Stock Averaging", href: "https://openroot.in/stock-averaging/", icon: Icons.stockAveraging },
-  { name: "SIP Return Analyzer", href: "https://openroot.in/return-analyzer/", icon: Icons.sipAnalyzer },
-  { name: "Gold Jewel Price Indicator", href: "https://openroot.in/openroot-gold-ai/", icon: Icons.goldJewel },
-  { name: "Credit Card EMI Analyzer", href: "https://openroot.in/openroot-creditcard-emi-analyzer/", icon: Icons.creditEmi },
-  { name: "Travel Expense Manager", href: "https://openroot.in/openroot-travel-expense-manager/", icon: Icons.travelExpense },
   { name: "Makaut Grade Calculator", href: "https://openroot.in/openroot-makaut_grade_and_percentage-calculator/", icon: Icons.gradeCalculator },
   { name: "Helping Hand (Job Updates)", href: "https://openroot.in/openroot-helping-hand/", icon: Icons.helpingHand },
+  { name: "Openroot Classes", href: "https://openroot-classes-firebase.web.app/", icon: Icons.Classes },
+  { name: "Travel Expense Manager", href: "https://openroot.in/openroot-travel-expense-manager/", icon: Icons.travelExpense },
+  { name: "Openroot AI Module", href: "https://openroot-time-ai-module.web.app/", icon: Icons.timeAI },
 ]);
 
 // ============================================================

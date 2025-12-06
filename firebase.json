@@ -13,26 +13,6 @@
         "type": 301
       },
       {
-        "source": "/stock-averaging/**",
-        "destination": "https://comeonsom.github.io/stock-averaging/",
-        "type": 301
-      },
-      {
-        "source": "/return-analyzer/**",
-        "destination": "https://comeonsom.github.io/investment-analyzer/",
-        "type": 301
-      },
-      {
-        "source": "/openroot-gold-ai/**",
-        "destination": "https://comeonsom.github.io/openroot-gold-ai/",
-        "type": 301
-      },
-      {
-        "source": "/openroot-creditcard-emi-analyzer/**",
-        "destination": "https://comeonsom.github.io/openroot-creditcard-emi-analyzer/",
-        "type": 301
-      },
-      {
         "source": "/openroot-travel-expense-manager/**",
         "destination": "https://comeonsom.github.io/openroot-travel-expense-manager/",
         "type": 301

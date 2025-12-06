@@ -15,8 +15,6 @@ import AboutCompany from "./components/AboutCompany";
 import Elements from "./components/Elements";
 import ContactFollow from "./components/ContactFollow";
 import Footer from "./components/Footer";
-import Promotion from "./components/Promotion";
-
 // ⭐ Lazy-loaded animation (major performance improvement)
 const BackgroundAnimation = React.lazy(() =>
   import("./components/BackgroundAnimation")
@@ -129,7 +127,6 @@ export default function App() {
 
       {/* 🔹 Main Sections */}
       <Header />
-      <Promotion />
       <Navbar />
       <AboutCompany />
       <Elements />
